@@ -1,0 +1,35 @@
+<form name="modalForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">Telnet options</h3>
+	</div>
+
+	<div class="modal-body">
+		<div class="form-group" ng-class="{'has-error' : modalForm.loginPrompt.$invalid}">
+			<label>Login prompt
+				<input type="text" id="loginPrompt" name="loginPrompt" ng-model="properties.loginPrompt" ng-readonly="readOnly" class="form-control" required auto-focus></input>
+			</label>
+		</div>
+		<div class="form-group" ng-class="{'has-error' : modalForm.passwordPrompt.$invalid}">
+			<label>Password prompt
+				<input type="text" id="passwordPrompt" name="passwordPrompt" ng-model="properties.passwordPrompt" ng-readonly="readOnly" class="form-control" required></input>
+			</label>
+		</div>
+	 
+		<div class="form-group" ng-class="{'has-error' : modalForm.ftpPort.$invalid}">
+			<label>FTP port
+				<input type="text" id="ftpPort" name="ftpPort" ng-model="properties.ftpPort" ng-readonly="readOnly" class="form-control" required ng-pattern="/^\s*\d+\s*$/"></input>
+			</label>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" ng-model="properties.ftps">
+				Use secure FTP
+			</label>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" id="cancel" class="btn" ng-click="$dismiss()">Cancel</button>
+		<button type="submit" id="ok" class="btn btn-primary" ng-disabled="modalForm.$invalid" ng-click="$close(properties)">OK</button>
+	</div>
+</form>

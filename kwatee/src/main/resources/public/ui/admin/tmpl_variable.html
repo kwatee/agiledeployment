@@ -1,0 +1,16 @@
+<form name="modalForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">{{variable.name}}</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<label for="varValue" class="control-label">Value</label>
+			<input type="text" id="varValue" ng-model="variable.value" class="form-control" auto-focus></input>
+			<small>{{variable.description}}</small>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button id="cancel" type="button" class="btn" ng-click="$dismiss()">Cancel</button>
+		<button id="ok" type="submit" class="btn btn-primary" ng-click="$close(variable.value)">OK</button>
+	</div>
+</form>

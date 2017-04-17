@@ -1,0 +1,44 @@
+<form name="modalForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">Properties for {{node.name}}</h3>
+	</div>
+
+	<div class="modal-body">
+		<div class="form-group" ng-if="node.hasVariables">
+			<em style="color: blue">This file contains kwatee variables</em>
+			<div class="form-group checkbox" style="margin-top:0">
+				<label class="control-label">
+					<input type="checkbox" id="ignoreVariables" ng-model="node.properties.ignoreVariables" ng-disabled="readOnly"></input>
+					Ignore variables
+				</label>
+			</div>
+		</div>
+		<div class="form-group checkbox">
+			<label class="control-label">
+				<input type="checkbox" id="ignoreIntegrity" ng-model="node.properties.ignoreIntegrity" ng-disabled="readOnly"></input>
+				Ignore in integrity check
+			</label>
+		</div>
+		<div class="form-group checkbox">
+			<label class="control-label">
+				<input type="checkbox" id="dontDelete" ng-model="node.properties.dontDelete" ng-disabled="readOnly"></input>
+				Don't delete on undeploy
+			</label>
+		</div>
+		<div class="form-group">
+			Permissions
+			<toolbar-button id="permissions" ng-click="editPermissions()" title="File permissions / ownership"></toolbar-button>
+		</div>
+		
+		<div class="form-group" ng-if="node.layer">
+			<em>This file is an overlay</em>
+			<button type="button" id="remove" class="btn btn-xs" ng-disabled="readOnly" ng-click="$close(null)">Remove</button>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<a id="view" href="api/artifacts/{{artifactName}}/{{versionName}}/package/file?path={{path()}}" ng-hide="node.dir" ng-click="$dismiss()" target="_blank" class="btn btn-default pull-left">View</a>
+		<button type="button" id="cancel" class="btn btn-default" ng-click="$dismiss()">Cancel</button>
+		<button type="submit" id="ok" class="btn btn-primary" ng-disabled="readOnly" ng-click="$close(node.properties)">OK</button>
+	</div>
+</form>

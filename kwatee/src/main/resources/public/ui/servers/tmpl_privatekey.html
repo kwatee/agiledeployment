@@ -1,0 +1,37 @@
+<form name="privateKeyForm">
+	<div class="modal-header">
+		<h3 class="modal-title">Enter private key</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-horizontal">
+			<div style="margin-bottom: 5px">
+				<span class="radio radio-inline"> <label><input
+						type="radio" id="radio_text" name="pemType" ng-model="pemType"
+						value="text">X.509 private key</label>
+				</span> <span class="radio radio-inline"> <label><input
+						type="radio" id="radio_path" name="pemType" ng-model="pemType"
+						value="path">Path to private key</label>
+				</span>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-class="{'has-error' : privateKeyForm.pemField.$invalid}"
+			ng-show="pemType == 'text'">
+			<textarea name="pemField" ng-model="pem" class="form-control" rows="15"
+				auto-focus placeholder="(existing private key will not be shown)"
+				ng-pattern="/^-----BEGIN \w* PRIVATE KEY-----[\s\S]+-----END \w* PRIVATE KEY-----$/">
+			</textarea>
+		</div>
+		<div class="form-group"
+			ng-class="{'has-error' : privateKeyForm.pathField.$invalid}"
+			ng-show="pemType == 'path'">
+			<input type="text" name="pathField" ng-model="path" class="form-control"></input>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button id="cancel" type="button" class="btn" ng-click="$dismiss()">Cancel</button>
+		<button id="ok" type="submit" class="btn btn-primary"
+			ng-disabled="pemType == 'text' ? (!pem || privateKeyForm.pemField.$invalid) : (!path || privateKeyForm.pathField.$invalid))"
+			ng-click="$close(pemType == 'text' ? pem : path)">OK</button>
+	</div>
+</form>

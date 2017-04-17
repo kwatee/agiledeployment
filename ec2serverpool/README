@@ -1,0 +1,4 @@
+1. Copy the ec2serverpool jar and its dependencies into the webapps/kwatee/WEB-INF/lib/
+2. Edit webapps/kwatee/WEB-INF/classes/kwatee.properties and add:
+   kwatee.conduit.serverFactories=net.kwatee.agiledeployment.conduit.EC2ServerFactory
+3. Restart tomcat

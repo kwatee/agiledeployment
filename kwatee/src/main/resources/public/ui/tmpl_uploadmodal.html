@@ -1,0 +1,14 @@
+<form name="overlayForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">{{title}}</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<button id="file" type="button" class="btn btn-default" file-chooser file-show ng-model="upload" required title="Shift-click to enter file path local to kwatee server">Choose file</button>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button id="cancel" type="button" class="btn" ng-click="$dismiss()">Cancel</button>
+		<button id="ok" type="submit" class="btn btn-primary" ng-disabled="overlayForm.$invalid" ng-click="$close(upload)">OK</button>
+	</div>
+</form>

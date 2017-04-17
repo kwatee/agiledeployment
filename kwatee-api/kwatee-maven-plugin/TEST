@@ -1,0 +1,3 @@
+mvn -Psetup -ftest_pom.xml package
+mvn -Pdeploy -ftest_pom.xml package
+mvn -Pcleanup -ftest_pom.xml package

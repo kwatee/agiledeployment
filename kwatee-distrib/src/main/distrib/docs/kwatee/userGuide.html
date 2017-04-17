@@ -1,0 +1,726 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Kwatee User Guide</title>
+	<link rel="stylesheet" type="text/css" href="../res/doc.css" />
+	<link href="../res/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../res/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+	<link href="../res/featherlight.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="../res/jquery.js"></script>
+	<script type="text/javascript" src="../res/featherlight.min.js"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+       _gaq.push(['_setAccount', 'UA-22311236-1']);
+       _gaq.push(['_trackPageview']);
+      (function() {
+           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+	</script>
+</head>
+<body>
+<div class="container">
+	<h1>Kwatee User Guide <small>version ${project.version}</small></h1>
+
+	<h2>Introduction</h2>
+	<div class="row">
+		<div class="col-xs-12">
+			<p>Kwatee Agile Deployment is an application that manages the deployment and update of software on target servers. This user guide describes Kwatee's web interface; it is still very raw but it is the authors hope that the concepts presented herein will complement Kwatee's rather straightforward web interface. Nevertheless, should some concepts remain too obscure to be put into practice, do not hesitate to contact our support for clarifications and suggestions as to which parts of this reference manual are most wanting.</p>
+			<p>Kwatee uses the following terminology for its key elements:</p>
+			<table class="table table-striped">
+				<colgroup><col width="120"/></colgroup>
+				<tr><th>Element</th><th>Description</th></tr>
+				<tr><td><em>Artifact</em></td><td>An artifact is an abstract designations of a deployable asset. Artifacts can contain one or more <i>versions</i> (see below).</td></tr>
+				<tr><td><em>Version</em></td><td>A version is an instance of an artifact that may represent a platform-specific <i>package</i> (see below) and/or a specific revision.</td></tr>
+				<tr><td><em>Package</em></td><td>This term denotes the set of physical files to be eventually deployed, bundled as a single file. Kwatee recognizes the internal structure of .zip, .tar, .tar.gz, .tgz, .tar.bz2 and .war package formats that will be expanded on the target servers upon deployment.</td></tr>
+				<tr><td><em>Template</em></td><td>A template is a file that contains <a href="#variables">Kwatee variables</a> that will be instantiated upon deployment on target servers.</td></tr>
+				<tr><td><em>Overlay</em></td><td>Overlays are files that are layered on top of the one of an existing package. They enable advanced configuration without altering original packages.</td></tr>
+				<tr><td><em>Server</em></td><td>Servers, or rather <i>target servers</i> denote the network locations on which artifacts will be deployed.</td></tr>
+				<tr><td><em>Server Pool</em></td><td>Server pools are seen as a single logical unit from a high-level deployment perspective but actually stand for a set of <i>instances</i> on which each deployment operation applied to the entire pool is individually applied.</td></tr>
+				<tr><td><em>Environment</em></td><td>An environment defines a the working context of deployment operations. Environments associate servers with artifacts. A environment may contain several <i>releases</i> (see below).</td></tr>
+				<tr><td><em>Release</em></td><td>A release defines the artifact version that must be deployed on target servers within an environment. The reserved <i>snapshot</i> release is the only release that may be edited. All other releases are frozen versions of earlier configurations.</td></tr>
+				<tr><td><em>Deployment Operation</em></td><td>Deployment operations generally denote operations performed on target servers which include: deploy, undeploy, integrity check, start, stop and runtime status.</td></tr>
+			</table>
+		</div>
+	</div>
+
+	<h2>Artifacts</h2>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/artifacts.png" data-featherlight="image"><img src="img/screenshots/thumbnails/artifacts.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Artifacts are abstract designations of software packages or files. An artifact is a generic denomination that is independent of the implementations which may available for different platforms in different <a href="#versions">versions</a>.</p>
+			<p>Clicking the <img class="action" src="img/icon/add.png"/> (create artifact) icon prompts for a artifact name then brings up the <a href="#artifact">artifact configuration</a> panel. The name serves as a reference and cannot be modified after the artifact is created. Artifact names may contain only alpha-numerical characters, '.' (dot) or '_' (underline).</p>
+			<p>Clicking the <img class="action" src="img/icon/delete.png"/> (delete artifact) icon deletes the selected artifact. Artifacts cannot be deleted as long as they are referenced by a release.</p>
+			<p>Clicking an artifact's name brings up the <a href="#artifact">artifact configuration</a> panel for the selected artifact.</p>
+		</div>
+	</div>
+				
+	<h3><a id="artifact">Artifact Configuration</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/artifact.png" data-featherlight="image"><img src="img/screenshots/thumbnails/artifact.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Artifacts can be <span class='highlight_light'>Disabled</span> so that they are excluded from deployment operations. Disabling an artifact is the only alternative to deleting it when it is referenced in frozen releases.</p>
+			<p>Artifacts contain <span class='highlight_light'>Versions</span> which describe specific implementations of physical packages.</p>
+			<p>An optional <span class='highlight_light'>Description</span> may be provided. Artifact descriptions only appear in user interface panels for informational purposes.</p>
+			<div class="boxed">
+				<p>Clicking the <img class="action" src="img/icon/add.png"/> (create version) icon prompts for a version name then brings up the <a href="#version">version configuration</a> panel. The name serves as a reference and cannot be modified after the artifact is created. Version names may contain only alpha-numerical characters, '.' (dot) or '_' (underline).</p>
+				<p>Clicking the <img class="action" src="img/icon/duplicate.png"/> (duplicate version) icon prompts for a version name then makes a copy of the selected version (package included) and brings up the <a href="#version">version configuration</a> panel.</p>
+				<p>Clicking the <img class="action" src="img/icon/delete.png"/> (delete version) icon deletes the version. Versions cannot be deleted as long as they are referenced by a release.</p>
+				<p>Clicking a version's name brings up the <a href="#version">version configuration</a> panel for the selected version.</p>
+			</div>
+			<div class="alert alert-info">Versions often have extensive configuration. The recommended procedure for creating a new version in an artifact is to duplicate the latest version. In most cases, only a new package will need to be uploaded.</div>
+		</div>
+	</div>
+				
+	<h3><a id="version">Version Configuration</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/version.png" data-featherlight="image"><img src="img/screenshots/thumbnails/version.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Versions are specific artifact implementations that define platform-dependent physical packages, version actions and executables. Versions can be <span class='highlight_light'>Disabled</span> so that they are excluded from deployment operations. Disabling a version is the only alternative to deleting it when it is referenced in frozen releases.</p>
+			<p>An optional <span class='highlight_light'>Description</span> may be provided. Version descriptions only appear in user interface panels for informational purposes.</p>
+			<p>Versions must define the <span class='highlight_light'>Platforms</span> they are compatible with. When configuring a release only compatible versions may be associated to a particular target server. Currently, Kwatee supports the following platforms: Linux (x86/64bits), Solaris (x86/sparc), Windows, AIX (experimental), MacOS X (x86)</p>
+			<div class="alert alert-info">1. If no platform is checked the version is assumed to be <i>universal</i>, that is, compatible with any platform.<br/>
+			2. Versions that are referenced in <a href="#tag" class="alert-link">tagged releases</a> cannot be modified except for their description and their disable state.</div>
+			<p>Clicking the <img class="action" src="img/icon/icon_action.png"/> (version deployment actions) let's you configure actions during the deployment process (see below).</p>
+			<p>Clicking the <img class="action" src="img/icon/addartifact.png"/> (upload package) icon brings up the <a href="#version_package_upload">version package upload</a> dialog. </p>
+			<div class="alert alert-info">It is possible to define versions that have no packages. This is only useful if <a href="#version_actions" class="alert-link">version actions</a> are defined as these actions will be executed regardless of the existence of an package.</div>
+			<p>Clicking the <img class="action" src="img/icon/variable.png"/> (version variables) icon brings up the <a href="#version_variables">version variables</a> panel.</p>
+			<p>Clicking the package's name (if there is a package) brings up the <a href="#version_package_browser">version package</a> panel.</p>
+			<p>Clicking the <img class="action" src="img/icon/add.png"/> (add executable) icon prompts for an executable name and brings up the <a href="#version_executable">version executable</a> panel.</p>
+			<p>Clicking the <img class="action" src="img/icon/delete.png"/> (delete executable) icon deletes the selected executable.</p>
+			<p>Clicking an executable's name brings up the <a href="#version_executable">version executable</a> panel for the selected executable.</p>
+		</div>
+	</div>
+	
+	<h4><a id="version_deploy_actions"></a>Version Deployment Actions</h4>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Version deployment Actions are executed at different stages of the deployment process. Actions are user-defined shell scripts that will be executed on the target server.</p>
+			<ul>
+				<li><span class='highlight_light'>Pre-deploy</span>: this action is executed before an package is deployed on a target server.<br/>Use for checking installed pre-requisites, running database schema upgrade scripts, etc.</li>
+				<li><span class='highlight_light'>Post-deploy</span>: this action is executed after an package has been deployed on a target server.<br/>Use to setup registry entries, configure crontab jobs, etc.</li>
+				<li><span class='highlight_light'>Pre-undeploy</span>: this action is executed before an package is undeployed from a target server.<br/>Use to make sure processes are properly stopped (or stop them), etc.</li>
+				<li><span class='highlight_light'>Post-undeploy</span>: this action is executed after an package has been undeployed from a target server.<br/>Use for deleting non-package data files, remove registry / crontab entries, etc.</li>
+			</ul>
+			<div class="alert alert-info">The working directory will be set to the deployment directory when an action is executed.</div>
+			<p>Version deployment action scripts, when defined, are expected to return well-known results that are understandable by kwatee:</p>
+			<ul style="margin-bottom:0">
+				<li>The literal <code>[kwate_ok]</code> if the script execution was successful</li>
+				<li>The literal <code>[kwatee_error]</code> followed by an optional message on the same line in case of error</li>
+				<li>Otherwise, status will be reported as <i>undetermined</i></li>
+			</ul>
+			<div class="alert alert-info">Version actions will be executed even if the version does not have an package. This feature may be useful to execute setup/cleanup operations without having to create a dummy package.</div>
+			<p>Actions must not necessarily be limited to a single shell script line. Typing the <i>Enter key</i> when editing an action will bring up the multi-line action editor</p>
+		</div>		
+	</div>
+
+	<h3><a id="version_package_upload">Package Upload</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The version package contains the set of files to be eventually deployed on target servers. Any file can be uploaded as an package and will be  copied into the repository.</p>
+			<p>Packages can be either <span class='highlight_light'>uploaded</span> or <span class='highlight_light'>imported</span>. The difference lies in that uploaded packages are sent to Kwatee via the browser's HTTP upload mechanism whereas imported packages must reside on the same file system on which Kwatee is installed and generate no network traffic. Kwatee's key benefits derive from it's ability to customize individual files within packages.</p>
+			<p>When uploading an updated package, pre-existing overlays and <a href="#package_file_options">special file options</a> may be preserved or erased depending on the value of the <span class='highlight_light'>Delete existing version overlays</span> checkbox.</p>
+			<div class="panel panel-info">
+				<div class="panel-heading">Several package types are recognized based on their file extensions</div>
+				<table class="table table-striped">
+					<colgroup><col width="120"/><col width="160"/></colgroup>
+					<tr><th>Extension</th><th>Type</th><th>Comments</th></tr>
+					<tr><td>.zip</td><td>Zip package</td><td>Internal structure is browsable and customizable. Any level of compression should be supported</td></tr>
+					<tr><td>.tar</td><td>Tar package</td><td>Internal structure is browsable and customizable (tested with gnu Tar). This format preserves symbolic links and executable flags.</td></tr>
+					<tr><td>.tar.gz or .tgz</td><td>Gzipped Tar package</td><td>See Tar packages</td></tr>
+					<tr><td>.tar.bz2</td><td>Bzipped Tar package</td><td>See Tar packages</td></tr>
+					<tr><td>.war</td><td>Web applications</td><td>Internal structure is browsable and customizable.</td></tr>
+					<tr><td>Directory</td><td>Directory</td><td>All files and sub-directories are recursively imported (only in import mode).</td></tr>
+					<tr><td>other</td><td>Generic file</td><td>Treated as a plain (and opaque) file.</td></tr>
+				</table>
+			</div>
+			<div class="alert alert-info">When uploading a new package it is usually best not to check the <em>Delete existing overlays</em> check box so that existing special files options are preserved along with earlier overlays.</div>
+		</div>
+	</div>
+
+	<h3><a id="version_package_browser">Package Customization</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/version_package.png" data-featherlight="image"><img src="img/screenshots/thumbnails/version_package.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Version packages can be customized by overlaying additional files and by setting options files that need special treatment.</p>
+			<p>Clicking the <img class="action" src="img/icon/overlay.png"/> (add overlay) icon lets you upload/import an overlay file (see <a href="#package_overlays">package overlays</a>).</p>
+			<p>Clicking the <img class="action" src="img/icon/icon_special.png"/> (special files) icon brings up the <a href="#special_files">Special Files Locator</a> dialog.</p>
+			<p>Clicking the <img class="action" src="img/icon/variable.png"/> (variable prefix character) icon brings up the <a href="#var_prefix">Change Version Package Variable Prefix</a> dialog.</p>
+			<p>Clicking a file's name brings up the <a href="#package_file_options">file options</a> panel.</p>
+		</div>
+	</div>
+
+	<h3><a id="package_overlays">Package Overlays</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>It is possible to add single files to an package; these files are called <i>overlays</i>. The version overlay mechanism enables the usage of off-the-shelf third party packages with all the benefits of Kwatee management and customization.</p>
+			<p>The <span class='highlight_light'>Destination Path</span> specifies at which relative path of the package the overlay will be uploaded (or imported). The Destination Path will be pre-filled with the path of the current selection in the package file tree but can be modified manually to any value, regardless of whether it already exists in the package or not.</p>
+			<p>If an overlay has the exact same name than that of an existing file in the package it will override that file. This feature is useful, for instance, for replacing a file containing hard-coded parameters with a template file containing <a href="#variables">kwatee variables</a> that can be defined later on a per-release basis.</p> 
+		</div>
+	</div>
+
+	<h3><a id="package_file_options">File Options</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/version_package_options.png" data-featherlight="image"><img src="img/screenshots/thumbnails/version_package_options.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Some files in an package may require non-standard handling due to their special nature.</p>
+			<p>This non-standard handling can be configured with the special options dialog.</p>
+			<p><span class='highlight_light'>Ignore during integrity check</span>: some application require files at installation which get modified by the application itself during its lifetime, or files that must be deleted at the end of the installation. To prevent such files from triggering an unwanted integrity check report, this option may be checked.</p>
+			<p><span class='highlight_light'>Ignore Kwatee variables</span>: there are cases where regular files contain data that get unintentionally interpreted as <a href="#variables">Kwatee variables</a>. To avoid such files to be treated as templates check this option.</p>
+			<p><span class='highlight_light'>Don't remove when uninstalling</span>: there may be cases where a file in an artifact should survive artifact undeployment. To prevent such a file from being removed check this option.</p>
+			<p>Clicking the <img class="action" src="img/icon/permission.png"/> (file permissions/ownership) icon let's you configure the owner/group of the file or directory as well as the reading and writing permissions.</p>
+			<div class="alert alert-info">File permissions will only be applied if the target server to which they are deployed is configured with the <span class='highlight_light'>Use sudo when deploying</span> option.</div>
+		</div>
+	</div>
+
+	<h3><a id="special_files">Special Files Locator</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/version_package_special.png" data-featherlight="image"><img src="img/screenshots/thumbnails/version_package_special.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The special files locator lists all overlay files, files with <a href="#variables">kwatee variables</a> or files that have options. Selecting a file in the list and clicking the <b>Find</b> button expands the parent directories in the package tree and selects the file.</p>
+		</div>
+	</div>
+
+	<h3><a id="var_prefix">Change Version Package Variable Prefix</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>There are cases where <code>%{text}</code> pattern is used within version package files and should not be interpreted as a <a href="#variables">kwatee variable</a>. Variable detection can be turned off in these files using the <a href="#package_file_options">Special File options</a>. However, this can be a tedious operation when there are many such files. Also, it may be required to have actual <a href="#variables">kwatee variables</a> in these files as well. To address this problem, kwatee enables you to customize the pattern that it uses to detect <a href="#variables">kwatee variables</a> in file. This customization is limited to modifying the first characer of the patter; so, instead of the default <code>%{varName}</code> you could use <code>&amp;{varName}</code> instead. The pattern may be customized on a version per version basis. The custom variable prefix only affects <a href="#variables">kwatee variable</a> detection within version package files (or overlays). Other <a href="#variables">kwatee variable</a> references found in actions are unaffected.</p>
+		</div>
+	</div>
+
+	<h3><a id="version_variables">Version Variables</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/version_variables.png" data-featherlight="image"><img src="img/screenshots/thumbnails/version_variables.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>This panel lists all <a href="#variables">kwatee variables</a> that occur either in version package files or in version actions. It is possible but not mandatory to define default values for the version's <a href="#variables">kwatee variables</a>.</p>
+			<p>Clicking the <img class="action" src="img/icon/add.png"/> (add variable) icon brings up the version variable editor and lets you create a new variable.</p>
+			<p>Clicking the <img class="action" src="img/icon/delete.png"/> (undefine variable) icon removes the variable if it manually created. Otherwise it just clears the previously set default value.</p>
+			<p>Clicking a variable's name brings up the version variable editor and lets you modify the variable's default value.</p>
+		</div>
+	</div>
+
+	<h3><a id="version_executable">Version Executable</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/version_exe.png" data-featherlight="image"><img src="img/screenshots/thumbnails/version_exe.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The version executable configuration defines the shell commands to start, stop and query the status of an application. The version executable is an optional configuration that is useful only if the package represents an application/service or web application. More than one executable may be configured for the discrete management and status of applications made up of several collaborative components.</p>
+			<p>An optional <span class='highlight_light'>Description</span> may be provided. Executable descriptions only appear in user interface panels for informational purposes.</p>
+			<p><span class='highlight_light'>Start action</span> is the shell script that will be invoked during a start operation.</p>
+			<p><span class='highlight_light'>Stop action</span> is the shell script that will be invoked during a stop operation.</p>
+			<p><span class='highlight_light'>Status action</span> is the shell script that will be invoked during a status operation.</p>
+			<p>Executable action scripts, when defined, are expected to return well-known results that are understandable by kwatee:</p>
+			<div class="panel panel-info">
+				<div class="panel-heading">Expected script results</div>
+				<table class="table table-striped">
+					<colgroup><col width="70"/></colgroup>
+					<tr><th>Action</th><th>Expected output</th></tr>
+					<tr><td>Start</td><td><ul style="margin-bottom:0"><li>The literal <code>[kwatee_running]</code> if the executable was successfully launched</li><li>The literal <code>[kwatee_error]</code> in case of error</li><li>Otherwise, status will be reported as <i>undetermined</i></li></ul></td></tr>
+					<tr><td>Stop</td><td><ul style="margin-bottom:0"><li>The literal <code>[kwatee_stopped]</code> if the executable was successfully stopped</li><li>The literal <code>[kwatee_error]</code> in case of error</li><li>Otherwise, status will be reported as <i>undetermined</i></li></ul></td></tr>
+					<tr><td>Status</td><td><ul style="margin-bottom:0"><li>The literal <code>[kwatee_running]</code> if the executable is running</li><li>The literal <code>[kwatee_stopped]</code> if the executable is stopped</li><li>The literal <code>[kwatee_error]</code> in case of error</li><li>Otherwise, status will be reported as <i>undetermined</i></li></ul></td></tr>
+				</table>
+			</div>
+			<p>Actions are not limited to a single shell script line. Typing the <i>Enter key</i> when editting an action will bring up the multi-line action editor</p>
+		</div>
+	</div>
+
+	<h2><a id="variables"></a>Kwatee Variables</h2>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Kwatee variables have the pattern <code>%{variableName}</code> where <i>variableName</i> must be made up of alpha-numerical characters and start with a letter. There are built-in variables such as <code>%{kwatee_package_dir}</code> and custom ones that you can make up such as <code>%{myservice_port}</code>.</p>
+			<p>There are cases where <code>%{text}</code> pattern is used within version package files and should not be interpreted as a kwatee variable. Variable detection can be turned off in these files using the <a href="#package_file_options">Special File options</a>. However, this can be a tedious operation when there are many such files. Also, it may be required to have actual kwatee variables in these files as well. To address this problem, kwatee enables you to customize the pattern that it uses to detect kwatee variables in version package files using the <a href="var_prefix">Change Package Variable Prefix</a> function. The custom variable prefix only affects <a href="#variables">kwatee variable</a> detection within version package files (or overlays). Other kwatee variable references found in actions are unaffected.</p>
+			<p>It is possible to configure kwatee to fully ignore kwatee variables in files with specific extensions when scanning packages by configuring the <a href="#admin_parameters">Administration Parameters</a>. Properly defining these extension blacklists will also improve performance when uploading large packages.</p>
+			<p>Kwatee variables definitions may optionally define default values using the special syntax: <code>%{variableName=defaultValue}</code>. Upon importing packages containing such patterns, kwatee will automatically create a default value entry.</p>
+		</div>
+	</div>
+
+	<h3>Variable Editor</h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/release_var_edit.png" data-featherlight="image"><img src="img/screenshots/thumbnails/release_var_edit.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Variables values can be any literals and may contain reference to other variables or system properties.</p>
+			<p>Variable values have <i>scopes</i> and multiple values may be defined for the same variable at different scopes. Scopes override each other from the general to the more specific.</p>
+			<div class="panel panel-info">
+				<div class="panel-heading">Scopes override precedence</div>
+				<table class="table table-striped">
+					<colgroup><col width="80"/><col width="80"/><col width="210"/></colgroup>
+					<tr><th>Artifact</th><th>Server</th><th>Scope</th><th>Description</th></tr>
+					<tr><td>Any</td><td>Any</td><td>- all -</td><td>the value is applicable for any artifact in any server of the release</td></tr>
+					<tr><td>Any</td><td><i>serverName</i></td><td>all artifacts@serverName</td><td>the value is applicable for all artifacts in a given server.</td></tr>
+					<tr><td><i>artifactName</i></td><td>Any</td><td>artifactName in all servers</td><td>the value is applicable to a given artifact in any server.</td></tr>
+					<tr><td><i>artifactName</i></td><td><i>serverName</i></td><td>artifactName@serverName</td><td>the value is applicable to a specific artifact in a specific server. Nothing has a higher precedence than this.</td></tr>
+				</table>
+			</div>
+			<p>Overriding is a powerful feature of deployment variables which provides a great deal of flexibility in configuration. For instance, the deployment paths of Kwatee artifacts on target servers can be customized by overriding system properties. By default, Artifacts are installed at <code>kwatee_package_dir</code> which resolves to:</p>
+			<p style="margin-left:40px;"><code>kwatee_package_dir=%{kwatee_deployment_dir}/%{kwatee_package_name}</code></p>
+			<p>and</p>
+			<p style="margin-left:40px;"><code>kwatee_deployment_dir=/var/tmp/kwateetest/%{kwatee_environment_name}</code></p>
+			<p>In the case of a tomcat web application wars must be deployed to tomcat's webapps directory.<br/>
+			This is achieved by overriding <code>kwatee_deployment_dir=/usr/local/tomcat/webapps</code>.</p>
+			<div class="panel panel-info">
+				<div class="panel-heading">There are a few built-in variables that cannot be overriden</div>
+				<table class="table table-striped">
+					<colgroup><col width="170"/></colgroup>
+					<tr><th>Variable</th><th>Description</th></tr>
+					<tr><td><var>kwatee_environment_name</var></td><td>Environment name in whose context the deployment operation or action is running</td></tr>
+					<tr><td><var>kwatee_release_name</var></td><td>Release name in whose context the deployment operation or action is running</td></tr>
+					<tr><td><var>kwatee_package_name</var></td><td>Artifact name in whose context the deployment operation or action is running</td></tr>
+					<tr><td><var>kwatee_server_name</var></td><td>Name of target server on which deployment operation or action is running</td></tr>
+					<tr><td><var>kwatee_server_ip</var></td><td>IP address of target server on which deployment operation or action is running</td></tr>
+					<tr><td><var>kwatee_server_instance</var></td><td>Name of a server pool instance</td></tr>
+				</table>
+			</div>
+			<div class="panel panel-info">
+				<div class="panel-heading">Overridable system variable that define properties needed in deployment operations</div>
+				<table class="table table-striped">
+					<colgroup><col width="170"/></colgroup>
+					<tr><th>Property</th><th>Description</th></tr>
+					<tr><td><var>kwatee_root_dir</var></td><td>This is the directory in which Kwatee will install the required kwagent executable. It is advisable to have only one <code>kwatee_root_dir</code> per server</td></tr>
+					<tr><td><var>kwatee_deployment_dir</var></td><td>This variable is only used to construct the <code>kwatee_package_dir</code> (see below) for the default installation hierarchy. The default value is used only for demo purposes. It should be redefined or overriden.</td></tr>
+					<tr><td><var>kwatee_package_dir</var></td><td>This is the directory in which a target artifact will get deployed. By default that directory resolves to: <code>/var/tmp/kwateetest/<i>environmentName</i>/<i>artifactName</i></code> but you can redefine it to any absolute path you wish. Make sure that the underlying SSH user has proper privileges to write and modify this directory.</td></tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<h2><a id="servers"></a>Servers</h2>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/servers.png" data-featherlight="image"><img src="img/screenshots/thumbnails/servers.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>A kwatee <i>server</i> entry must be defined for each target server on which software is to be deployed on. Kwatee also supports <i>server pools</i> which are seen as a single logical entity but that contain several <i>physical instances</i>.</p> 
+			<p>Clicking the <img class="action" src="img/icon/addserver.png"/> (create server) icon prompts for a server name then brings up the <a href="#server">server configuration</a> panel.</p>
+			<p>Clicking the <img class="action" src="img/icon/addserverpool.png"/> (create server pool) icon prompts for a server pool name and the type of server pool to create then brings up the <a href="#server">server configuration</a> panel. Currently two server pool types are supported: <a href="#pool_manual">manual server pools</a> and <a href="#pool_ec2">Amazon EC2 server pools</a>. Once created, the server pool type cannot be changed. In both cases the name serves as a reference and cannot be modified after the server is created. Server names may contain only alpha-numerical characters, '.' (dot) or '_' (underline).</p>
+			<p>Clicking the <img class="action" src="img/icon/delete.png"/> (delete server) icon deletes the selected server. Servers cannot be deleted as long as they are referenced by a release.</p>
+			<p>Clicking a server's name brings up the <a href="#server">server configuration</a> panel for the selected server.</p>
+		</div>
+	</div>
+
+	<h3><a id="server">Common Server Configuration</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/server.png" data-featherlight="image"><img src="img/screenshots/thumbnails/server.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Servers can be <span class='highlight_light'>Disabled</span> so that they are excluded from deployment operations. Disabling a server is the only alternative to deleting it when it is referenced in frozen releases.</p>
+			<p>An optional <span class='highlight_light'>Description</span> may be provided. Server descriptions only appear in user interface panels for informational purposes.</p>
+			<p><span class='highlight_light'>Platform</span> is a mandatory parameter. Kwatee currently supports Linux, Solarix, AIX, Windows and MacOS target platforms. This parameter determines which Kwatee agent will be installed as well as the compatibility with versions.</p>
+			<p>An appropriate <span class='highlight_light'>Remote access type</span>, such as it is supported by the remote server, must be selected.</p>
+			<div class="panel panel-info">
+				<div class="panel-heading">Remote access types</div>
+				<table class="table table-striped">
+					<colgroup><col width="150"/></colgroup>
+					<tr><th>Access Type</th><th>Description</th></tr>
+					<tr>
+						<td>Secure Shell / Scp</td>
+						<td>This is the prefered access type to be used whenever possible.
+							Ssh remote access supports two modes of authentication: password or private key. Clicking the <span class='highlight_light'>Has private key</span> check box brings up the PEM dialog box where the private key can be entered. In that case, the password field becomes the paraphrase for the private key.<br/>
+							When the server platform is <i>windows</i> the <span class='highlight_light'>Cygwin</span> checkbox is shown. This option must be checked for ssh implementations based on cygwin such as OpenSSH.
+						</td>
+					</tr>
+					<tr>
+						<td>Telnet / ftp</td>
+						<td>
+							<div style="float:left; margin-right: 10px">
+								<a href="img/screenshots/server_telnet.png" data-featherlight="image"><img src="img/screenshots/thumbnails/server_telnet.gif" alt="server telnet" /></a>
+							</div>
+							Telnet / FTP is an experimental access type that is intended mainly for windows servers if usage of built-in services is prefered over the installation of third-party Ssh implementations. Advanced Options are available for the personalization of the telnet login &amp; password prompts which are necessary for the telnet operation, as well as the definition of non-standard FTP ports. Telnet remote access works by simulating a user login. This requires knowledge of the prompts identifying the login and the password inputs. The defaults are <i>Login:</i> for the <span class='highlight_light'>Login prompt</span> and <i>Password:</i> for the <span class='highlight_light'>Password prompt</span>. Non-standard FTP ports may also be customized in the Telnet Options.
+						</td>
+					</tr>
+				</table>
+			</div>
+			<p><span class='highlight_light'>Login</span> is the user id for logging into ssh or telnet &amp; ftp. <span class='highlight_light'>Password</span> is the password for logging into ssh or telnet &amp; ftp, unless <span class='highlight_light'>Has private key</span> has been checked in ssh mode in which case the password is used as the paraphrase for the provided private key. Checking the <span class='highlight_light'>Prompt</span> checkbox will cause the user to be prompted for the password when launching an operation.</p>
+			<p>Regular servers (as opposed to server pools) reference exactly one physical target server. Their definition includes an <span class='highlight_light'>IP Address</span> which can be provided either in dotted IP or domain name form, and a <span class='highlight_light'>Port</span> to be used for the ssh or the telnet connection.</p>
+			<p>The <span class='highlight_light'>Use sudo when deploying</span> option must be checked if your deployment operations require elevated privileges.</p>
+			<div class="alert alert-info">Remember to add a sudoers entry with <code>NOPASSWD</code> for <code>kwagent</code>.</div>
+		</div>
+	</div>
+
+	<h3><a id="pools">Server Pools</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Server pools act as a single logical unit from a configuration perspective in terms of artifact and version definition, configuration and variable instantiation. Each deployment operation will be executed identically on each instance of the pool.</p>
+			<p><span class='highlight_light'>Concurrency</span> is a common parameter to all server pools and determines how many server pool instances can execute deployment operations in parallel. Possible values are <i>one at a time</i>, <i>two at a time</i>, <i>five at a time</i> or <i>maximum</i>. <i>Maximum</i> is good for updating an internal pool of servers where up-time is not a consideration. On live public sites, depending on the size of the pool and the level of traffic a lower concurrency is recommended.</p>
+			<div class="alert alert-info">The same credentials will be used for each instance.</div>
+		</div>
+	</div>
+
+	<h3><a id="pool_manual"></a>Manual Server Pool</h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/serverpool.png" data-featherlight="image"><img src="img/screenshots/thumbnails/serverpool.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The manual server pool lets you define each instance parameter in the pool manually. Each deployment operation in which the server pool is involved will be replicated on all of its instances. <span class='highlight_light'>Instances</span> can are manually created and must be assigned a unique IP address and port.</p>
+			<p>The instance name is mandatory but only serves for informations purposes.</p>
+		</div>
+	</div>
+
+	<h3><a id="pool_ec2"></a>Amazon EC2 Server Pool</h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The Amazon Elastic Cloud server pools let you define dynamic criteria to select qualifying EC2 instances. An AWS <span class='highlight_light'>Access Key Id</span> must be provided as well as the <span class='highlight_light'>Secret key</span> to gain access to the AWS API. EC2 pools provide three ways to select instances:</p>
+			<ol>
+				<li><span class='highlight_light'>Load Balancer</span> selects all the instances associated to the AWS load balancer identified by the value of the <span class='highlight_light'>Select field</span> group. Load balancer-based EC2 pools have a special behavior: before a deploy or undeploy action, the instance will be removed from the EC2 load balancer and will be re-inserted at the end of the operation.</li>
+				<li><span class='highlight_light'>AMI Id</span> selects all the instances that are based on the same AMI Id identified by the value of the <span class='highlight_light'>select field</span> group.</li>
+				<li><span class='highlight_light'>Security Group</span> selects all the instances that are in the security group identified by the value in the <span class='highlight_light'>select field</span> group.</li>
+			</ol>
+			<div class="alert alert-info">Only active instances will be retrieved.</div>
+		</div>
+	</div>
+
+	<h2><a id="environments"></a>Environments</h2>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/environments.png" data-featherlight="image"><img src="img/screenshots/thumbnails/environments.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Environments define the set of artifacts and servers that are available for releases.</p>
+			<p>Clicking the <img class="action" src="img/icon/add.png"/> (create environment) icon prompts for an environment name then brings up the <a href="#environment">environment configuration</a> panel.
+			The name serves as a reference and cannot be modified after the environment is created. Environment names may contain only alpha-numerical characters, '.' (dot) or '_' (underline).</p>
+			<p>Clicking <img class="action" src="img/icon/delete.png"/> (delete environment) icon deletes the selected environment and all its releases.</p>
+			<p>Clicking an environment's name brings up the <a href="#environment">environment configuration</a> panel for the selected environment.</p>
+		</div>
+	</div>
+				
+	<h3><a id="environment">Environment Configuration</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/environment.png" data-featherlight="image"><img src="img/screenshots/thumbnails/environment.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Environments associate a set of environment servers with a set of environment artifacts.</p>
+			<p>An optional <span class='highlight_light'>Description</span> may be provided. Environment descriptions only appear in user interface panels for informational purposes.</p>
+			<div class="alert alert-info">There can be many releases in an environment but only one of them can be edited: <i>snapshot</i>. This release is meant to be used for work in progress.</div>
+			<p>Clicking the <span class='highlight_light'>Edit snapshot button</span> brings up the <a href="#release">release</a> panel.</p>
+			<p>Clicking the <img class="action" src="img/icon/addartifact.png"/> (add artifacts) icon brings up a dialog that lets you select existing artifacts to be added to this environment. Artifacts already included in the environment are not listed. Artifacts will be deployed on each server in the order listed on this panel and undeployed in the reverse order. Artifact deployment on a target server is never parallelized so ordering is always strictly enforced to make sure that artifacts down the line may rely on the presence of necessary pre-requisites.</p>
+			<p>Clicking the <img class="action" src="img/icon/up.png"/> (move artifact up) icon moves the selected artifact up in the list.</p>
+			<p>Clicking the <img class="action" src="img/icon/down.png"/> (move artifact down) icon moves the selected artifact down in the list.</p>
+			<p>Clicking the <img class="action" src="img/icon/delete.png"/> (remove artifact) icon removes the selected artifact from the environment. Removal will fail if the artifact is referenced in any release.</p>
+			<p>Clicking the <img class="action" src="img/icon/addserver.png"/> (add servers) icon brings up a dialog that lets you select existing servers to be added to this environment. Servers already included in the environment are not listed. Deployment operation will be performed sequentially on each server in the order listed on this panel for deploy/start operations and in the reverse order for undeploy/stop operations if the <span class='highlight_light'>Deploy in sequence</span> is checked. Otherwise, the actual deployment sequence will be unpredictable as deployments on many servers will be parallelized.</p>
+			<p>Clicking the <img class="action" src="img/icon/up.png"/> (move server up) icon moves the selected server up in the list.</p>
+			<p>Clicking the <img class="action" src="img/icon/down.png"/> (move server down) icon moves the selected server down in the list.</p>
+			<p>Clicking the <img class="action" src="img/icon/delete.png"/> (remove server) icon removes the selected server from the environment. Removal will fail if the artifact is referenced in any release.</p>
+			<p>Clicking a release's name brings up the <a href="#release">release</a> panel.</p>
+			<p>Clicking the <img class="action" src="img/icon/delete.png"/> (delete release) icon deletes the selected release.</p>
+		</div>
+	</div>
+				
+	<h3><a id="release">Release Configuration</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/release.png" data-featherlight="image"><img src="img/screenshots/thumbnails/release.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Releases are defined within an environment and associate specific environment artifact versions to target environment servers. <i>snapshot</i> is a special release which is actually the only one that can be edited.</p>
+			<p>An optional <span class='highlight_light'>Description</span> may be provided</p>
+			<p>Clicking the <img class="action" src="img/icon/permission.png"/> (release permissions/ownership) icon let's you configure the default owner/group of all deployed files and directories as well as their default permissions.</p>
+			<p>Clicking the <img class="action" src="img/icon/variable.png"/> (edit / view release <a href="#variables">kwatee variables</a>) icon brings up the <a href="#release_variables">Release Variables</a> panel.</p>
+			<p>Clicking the <img class="action" src="img/icon/icon_action.png"/> (release deployment actions) let's you configure actions during the deployment process (see below).</p>
+			<p>Clicking the <img class="action" src="img/icon/tag.png"/> (tag release) icon, which is enable only for the snapshot release, prompts for a release name and then copies the snapshot configuration into the new frozen release. It is good practice to tag a release when it is ready for production. Since frozen releases are uneditable you can re-instantiate them in the future with the confidence that they will be identical to the time they were deployed in production.</p>
+			<p>Clicking the <img class="action" src="img/icon/edit.png"/> (reedit tag as snapshot) icon, which is enabled only for previously tagged releases, copies the tagged release back into the snapshot release.</p>
+		</div>
+	</div>
+
+	<h4><a id="deployment_actions"></a>Release Deployment Actions</h4>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Kwatee lets you define release deployment actions that will be executed at different stages of the deployment process. Actions are user-defined shell scripts that will be executed on the target server.</p>
+			<ul>
+				<li><span class='highlight_light'>Pre-setup</span>: this action is executed once per target server before any version is deployed. Use for checking installed pre-requisites, running database schema upgrade scripts, etc.</li>
+				<li><span class='highlight_light'>Post-setup</span>: this action is executed once per target server after all the configured versions have been deployed on the server. Use to setup registry entries, configure crontab jobs, etc.</li>
+				<li><span class='highlight_light'>Pre-cleanup</span>: this action is executed once per target server before any version is undeployed. Use to make sure processes are properly stopped (or stop them), etc.</li>
+				<li><span class='highlight_light'>Post-cleanup</span>: this action is executed once per target server all the configured versions have been undeployed from the server. Use for deleting non-package data files, remove registry / crontab entries, etc.</li>
+			</ul>
+			<div class="alert alert-info">The working directory will be set to the deployment directory when an action is executed.</div>
+			<p>Deployment action scripts, when defined, are expected to return well-known results that are understandable by kwatee:</p>
+			<ul style="margin-bottom:0">
+				<li>The literal <code>[kwate_ok]</code> if the script execution was successful</li>
+				<li>The literal <code>[kwatee_error]</code> followed by an optional message on the same line in case of error</li>
+				<li>Otherwise, status will be reported as <i>undetermined</i></li>
+			</ul>
+		</div>
+	</div>
+
+	<h4><a id="assignments"></a>Server Artifacts</h4>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The Server artifacts area provide the means to configure the versions to be deployed on environment servers and to customize them.</p>
+			<p>Each environment server is represented as a folder, in addition to the default versions folder which lists all the environment artifacts (white environment artifact icons denote artifacts not yet assigned in this release).</p>
+			<p>The toolbar options will be enabled depending on the type of element selected in the tree and whether the current environment is editable (SNAPSHOT).</p>
+			<p>Clicking the <img class="action" src="img/icon/version.png"/> (change active version) icon lets you select a version for the artifact that is assigned to the selected server. Setting the active version of an Environment Artifact will make that version the default for that artifact on all servers. Of course, the default can be overriden by selecting a different active version on a server artifact. A release will not be valid until all server artifacts have an active version.</p>
+			<div class="alert alert-info">If a default Environment Artifact version is not platform compatible with a server where it is installed, the default must be overriden with a suitable version.</div>
+			<p>Clicking the <img class="action" src="img/icon/overlay.png"/> (add/remove overlays) icon brings up the <a href="#release_overlays">Release Overlays</a> panel.</p>
+			<p>Clicking the <img class="action" src="img/icon/addartifact.png"/> (add artifact to server) icon lets you select environment artifacts to assign to the selected server.</p>
+			<p>Clicking the <img class="action" src="img/icon/delete.png"/> (remove artifact from server) icon removes the selected artifact from its server. This operation will not trigger an undeploy operation so if the artifact was previously installed on the server it should be undeployed first.</p>
+		</div>
+	</div>
+				
+	<h3><a id="release_variables">Release variables</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/release_variables.png" data-featherlight="image"><img src="img/screenshots/thumbnails/release_variables.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>This panel let's you assign values for <a href="#variables">kwatee variables</a>.</p>
+			<p>All variables occuring in a release must be assigned before it can be deployed.</p>
+			<p>Clicking the <img class="action" src="img/icon/add.png"/> (add variable) icon brings up to release variable editor and creates a new deployment variable.</p>
+			<p>Clicking a variable's name brings up to release variable editor to edit the current variable.</p>
+			<p>Clicking the <img class="action" src="img/icon/duplicate.png"/> (duplicate variable) icon let's you create a new variables by modifying selected properties of the current one.</p>
+			<p>Clicking the <img class="action" src="img/icon/delete.png"/> (delete variable) icon deletes the selected variable.</p>
+		</div>
+	</div>
+
+	<h3><a id="release_overlays">Overlays &amp; Special File Options</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Deployment overlays and special file options work exactly the same way as <a href="#version_package_browser">version overlays</a>. Deployment overlays can be uploaded either to Environment Artifacts in which case they will be common to all servers containing that artifact, or they can be uploaded to server artifacts. If a server artifact overlay and an environment artifact overlay overlap, the server artifact overlay will take precedence. The same goes for special file options.</p>
+			<div class="alert alert-info">Special file options can be set only on overlays and in the context (environment artifact or server artifact) where they were uploaded.</div>
+			<p>When an active version is defined, the version package files will be shown in addition to the deployment overlays.</p>
+			<p>Two new file icons identify deployment overlays.</p>
+		</div>
+	</div>
+
+	<h2><a id="deployments"></a>Deployments</h2>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/deployments.png" data-featherlight="image"><img src="img/screenshots/thumbnails/deployments.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>This panel lists all environments that contain deployable releases. Releases that have errors will not be included.</p>
+			<p>Clicking a release's name brings up the <a href="#deployment">Deployment panel</a>.</p>
+		</div>
+	</div>
+				
+	<h3><a id="deployment">Deployment</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/deployment.png" data-featherlight="image"><img src="img/screenshots/thumbnails/deployment.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Possible deployment operations are: <a href="#op_deploy">Deploy</a>, <a href="#op_undeploy">Undeploy</a>, <a href="#op_start">Start</a>, <a href="#op_stop">Stop</a>, <a href="#op_status">Status</a> and <a href="#op_integrity">Check Integrity</a>.</p>
+			<p>The deployment operation can be be applied to either:</p>
+			<ul class="bullets">
+				<li>The entire release.</li>
+				<li>All artifacts on the selected server.</li>
+				<li>The selected environment artifact on all server that it is assigned to.</li>
+				<li>The selected artifact on the selected server.</li>
+			</ul>
+		</div>
+	</div>
+	
+	<h4><a id="op_deploy"></a>Deploy Operation</h4>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The deploy operation installs version packages onto their target servers as per release configuration. Deploy operations are parallelized on multiple target servers unless the <i>Deploy in sequence</i> option was selected in the <a href="#environment_servers">environment servers</a> panel in which case servers are deployed one by one in the environment servers order. Artifact deployment order within a server is always enforced in Environment Artifact sequence order. The following operations will be executed on each target server during deployment:</p>
+			<pre>Establish remote connection to server
+Execute deployment pre-setup action
+for each artifact in server do:
+   Determine differential update set with respect to existing version
+   If deployed version is not up-to-date then:
+      Execute artifact pre-deploy action
+      Copy differential update over to server
+      Instruct kwateeAgent to expand differential update in artifact directory
+      Execute post-deploy action
+Execute deployment post-setup action
+Close remote connection</pre>
+		</div>
+	</div>
+
+	<h4><a id="op_undeploy"></a>Undeploy Operation</h4>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The undeploy operation uninstalls version packages from their target servers as per release configuration. Undeploy operations are parallelized on multiple target servers unless the <i>Deploy in sequence</i> option was selected in the <a href="#environment_servers">environment servers</a> panel in which case servers are undeployed one by one in the environment servers reverse order. Artifact undeployment order within a server is always enforced in Environment Artifact sequence reverse order. The following operations will be executed on each target server during undeployment:</p>
+			<pre>Establish remote connection to server
+Execute deployment pre-cleanup action
+for each artifact in server do:
+   Execute artifact pre-undeploy action
+   Instruct kwateeAgent to remove all previously deployed artifact files
+   Execute post-undeploy action
+Execute deployment post-cleanup action
+Close remote connection</pre>
+		</div>
+	</div>
+
+	<h4><a id="op_start"></a>Start Operation</h4>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The start operation starts all versions in the release that have executables defined with a start action. Start operations are parallelized on multiple target servers unless the <i>Deploy in sequence</i> option was selected in the <a href="#environment_servers">environment servers</a> panel in which case servers are started one by one in the environment servers order. Environment artifact order within a server is always strictly enforced. The following operations will be executed on each target server during start:</p>
+			<pre>Establish remote connection to server
+for each artifact in server do:
+   for each executable in artifact do:
+      Execute executable start action
+Close remote connection</pre>
+		</div>
+	</div>
+
+	<h4><a id="op_stop"></a>Stop Operation</h4>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The stop operation stops all versions in the release that have executables defined with a stop action. Stop operations are parallelized on multiple target servers unless the <i>Deploy in sequence</i> option was selected in the <a href="#environment_servers">environment servers</a> panel in which case servers are stopped one by one in the environment servers reverse order. Artifact stop order within a server is always enforced in Environment Artifact sequence reverse order. The following operations will be executed on each target server during stop:</p>
+			<pre>Establish remote connection to server
+for each artifact in server do:
+   for each executable in artifact do:
+      Execute executable stop action
+Close remote connection</pre>
+		</div>
+	</div>
+
+	<h4><a id="op_status"></a>Status Operation</h4>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The status operation queries the runtime status from all versions in the release that have executables defined with a status action. Status operations are always parallelized on multiple target servers. The following operations will be executed on each target server during status check:</p>
+			<pre>Establish remote connection to server
+for each artifact in server do:
+   for each executable in artifact do:
+      Execute executable status action
+Close remote connection</pre>
+		</div>
+	</div>
+
+	<h4><a id="op_integrity"></a>Integrity Check Operation</h4>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The integrity check operation verifies that artifacts previously deployed have not been tampered with, i.e., that installed package files are exactly as they were when deployed. Integrity check operations are always parallelized on multiple target servers. The following operations will be executed on each target server during integrity check:</p>
+			<pre>Establish remote connection to server
+for each artifact in server do:
+   request kwateeAgent to perform integrity check
+Close remote connection</pre>
+		</div>
+	</div>
+
+	<h3><a id="deployment_status">Deployment Status</a></h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/deploy_status.png" data-featherlight="image"><img src="img/screenshots/thumbnails/deploy_status.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>This panel shows the current status of ongoing deployment operations and then the final result. The list shows the status of each artifact deployment operation as well as the server's compounded status.</p>
+			<p>Clicking the <em>status</em> link brings up a dialog that provides detailed status.</p>
+		</div>
+	</div>
+
+<div style="display: none">
+	<h2><a id="cli"></a>Kwatee Command Line Installer</h2>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The Kwatee CLI Installer (kwclideployer) is a useful tool for performing field installations where remote access is disallowed or otherwise impractical. kwclideployer requires only a JRE; no application server or pre-configured database are used. It deploys the artifacts and configuration defined in a kwatee release bundle (see <a href="#release">release</a>).</p>
+			<p>The CLI Installer comes with a convenience shell script: <code>kwdeploy.sh</code> and accepts the following parameters:</p>
+			<pre>usage: kwclideployer
+    --artifact &lt;name&gt;       artifact name
+    --cancel                cancel ongoing operation
+    --check                 check release artifacts integrity
+    --contents              show release details
+    --deploy                install release artifacts
+    --help                  print this message
+ -P,--password &lt;password&gt;   kwatee password
+ -R,--repo &lt;path&gt;           repository location
+    --server &lt;name&gt;         server name
+    --server-local &lt;name&gt;   server name
+    --start                 start release artifacts executables
+    --status                check release artifacts executables status
+    --stop                  stop release artifacts executables
+ -U,--user &lt;user&gt;           kwatee user
+    --undeploy              uninstall release artifacts
+    --undeploy-forced       uninstall release artifacts regardless of
+                            errors</pre>
+		</div>
+	</div>
+</div>
+
+	<h2><a id="admin"></a>Administration</h2>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/admin_account.png" data-featherlight="image"><img src="img/screenshots/thumbnails/admin_account.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+		An email may be stored for users but it is not currently used by kwatee and may be left out.
+		</div>
+	</div>
+
+	<h3><a id="system_properties"></a>System Properties</h3>				
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/admin_properties.png" data-featherlight="image"><img src="img/screenshots/thumbnails/admin_properties.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+		System properties a special kwatee variables that are common to all releases. You may change the global defaults here but it is also possible to override system variable values for a specific release, artifact or server.
+		</div>
+	</div>
+
+	<h3><a id="admin_parameters"></a>Kwatee Parameters</h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/admin_parameters.png" data-featherlight="image"><img src="img/screenshots/thumbnails/admin_parameters.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>You can personalize your kwatee instance by entering a <span class='highlight_light'>Title</span> value. This title will be displayed on all pages above the menu bar.</p>
+			<p>It is possible to configure kwatee to fully ignore <a href="#variables">kwatee variables</a> in files with specific extensions when scanning packages by configuring the <span class='highlight_light'>Exclude File Extensions for Variable Scanning</span>.</p>
+		</div>
+	</div>
+
+	<h3><a id="admin_importexport"></a>Import / Export</h3>				
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/admin_impexp.png" data-featherlight="image"><img src="img/screenshots/thumbnails/admin_impexp.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+		Import/Export features may be used to keep backups of kwatee configuration. They can also serve to move a kwatee configuration from one server to another or from one database type to another.
+		</div>
+	</div>
+</div>
+</body>
+</html>

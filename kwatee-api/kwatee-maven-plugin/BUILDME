@@ -1,0 +1,2 @@
+To build the plugin, execute the following command
+  mvn clean package install

@@ -1,0 +1,340 @@
+.table-input {
+	margin: 0;
+}
+
+a, .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.breadcrumb {
+	padding: 4px 15px;
+}
+.breadcrumb > li+li > a, .breadcrumb > li+li > span {
+	font-size: 85%;
+}
+.breadcrumb > li+li:before {
+	content: "|"; 
+}
+
+.nav > li > a {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+ul.nav-links {
+	display: inline-block;
+	position:absolute;
+	top: 41px;
+	right: 5px;
+	font-weight: bold;
+}
+
+.nav-links > li {
+    float: left;
+}
+
+.nav-links > li > a {
+	padding: 0 0 0 15px;
+	font-size: 80%;
+}
+
+.nav.nav-tabs > li.active > a {
+	background-color: #f5f5f5;
+}
+
+.nav-links > li > a:visited {
+	color: inherited;
+}
+
+.nav.nav-links > li > a:hover, .nav.nav-links > li > a:focus {
+	background-color: inherit;
+}
+
+.emptyTable {
+	padding: 10px;
+	font-style: italic;
+}
+
+hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+a.editable-click { 
+    color: green;
+    border-bottom: dotted 2px green;
+}
+a.editable-click:hover { 
+    color: green;
+    border-bottom-color: #47a447;
+}
+
+.modal h3 {
+	font-size: 18px;
+}
+
+.defaultmodal .modal-content  { 
+	width: 400px;
+}
+
+.authmodal .modal-content, .messagesmodal .modal-content  {
+	width: 500px;
+}
+.messagesmodal .modal-body {
+	max-height: 600px;
+	overflow-y: scroll;
+}
+
+.messagesmodal .modal-body pre {
+	white-space: pre;
+	overflow-x: scroll;
+}
+
+.urlmodal .modal-content {
+	width: 500px;
+}
+
+.smallmodal .modal-content { 
+	width: 300px;
+}
+
+.specialmodal .modal-content { 
+	width: 500px;
+}
+.specialmodal .modal-body {
+	max-height: 255px;
+	overflow-y: scroll;
+}
+
+.selectormodal .modal-content { 
+	width: 500px;
+}
+.selectormodal .modal-body {
+	max-height: 255px;
+	overflow-y: scroll;
+}
+
+.panel {
+	position: relative;
+}
+.panel-heading.status {
+	background-image: url("../img/icon/icon_collapsed.png");
+	background-position: 1px 12px;
+	background-repeat: no-repeat;
+}
+.collapse.in .panel-status {
+	position: absolute;
+	top:12px;
+	left:0;
+	width: 15px;
+	height: 15px;
+	background-repeat: no-repeat;
+	background-image: url("../img/icon/icon_expanded.png");
+	background-color: #F5F5F5;
+}
+
+accordion > .panel-group .panel-default {
+	border: none;
+}
+
+accordion > .panel-group .panel-default > .panel-heading {
+	padding-bottom: 2px;
+	padding-top: 2px;
+	padding-left: 22px;
+	background-repeat: no-repeat;
+	background-position: 2px 4px;
+	background-color: white;
+}
+
+accordion .panel-group .panel-heading + .panel-collapse .panel-body {
+	border-top-style: none;
+}
+
+accordion.serverMappings .panel-default > .panel-heading, accordion.progress .panel-default > .panel-heading {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABYElEQVR42n3TwYqCQBwG8B5gH2bfYwWDEjrlwS5bh6JLhAQdtFAwArVVks5e7BAYLAjlIl067DU8J/oW/51xWWdjbAY+BBl/fqMzjQYanudtdrsdMPKN8m7b9kujbmy3Wzgej5CmKRRFQQXfj6KoxFzX3SDo9QFwHAdOpxPs93s4HA5wu91qoSzL4Hq9gu/7YFnWpgJM04QkScqcz2cIggDu9zvkef406/UaKsAwjAr4C26FGz2LrusEWC6XFIBb4Yn4TXVRFIUA8/mcAlarVQlcLpfazGYzAkynUwrQNI3ZYDKZEGA8HlOAqqrMBqPRiACDwYAC8LJYDfr9PgF6vR4FyLLMbCBJEgFEUaQAvEZWg263S4BOp/OF/2scxxWAvwurAXoGHrZzq9X6xOsKw7AEhsPhw8bB4/+13W4Ddah4nv8QBAHQ6YTFYsHcic1mE2pP5tvvSDiOA1bQnPIw/QDMCnK/8Z1RtgAAAABJRU5ErkJggg==");
+}
+
+accordion.deployments .panel-default > .panel-heading {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACBUlEQVR42t2Py2tTQRyFs3Dvzj9AwU2tCukNiC4FceVGdOMLRFCbhUQpVIRasKkgBkqjKIilqF2EGhfBhSuxgo80trdNbG6maU1aU5pgc9+vuY/jJNXk4sK1OMzHzCzOd+YXCv0Tq5QJ85WZc7T6/kKA85S8PrKykN6zK5favfNP3g6FdnQEJMNZvu8B8NlusX13zAbWP/bbax/6rd/UcoNmLXujKrw6cKorSPdJvmvC+p6AvjoGvTIBozoN3xGZS4Pvqgx5++00AY/aJM0VuiOkIopHZRZOQiuPQ/k6jK3sVTRmoxDzIxAXb0Pkb6I5P8CIsZ/VUXoZVgOCPuoYmxALSTTn7qL+7jqM+mfWqvxqb51S9wdsPJKKmF3Biwhtz+9ZDANw9XbQNQRYG0mY6yMwvg1AX74MTTgDVyuCPOMCgknO9l0DrvIJjvgG9Mc07M0nLHgPRuUWjHIUeukstKUTUPNH4ao8yERAQB5zlkcV0K0M7Ppz1voA5hprXW21XoJWPA21cBzKwmHIcwfhKDmQR0FBkjN9KrLwJKzaGMzqMAvHoJOLLHyStR6Dwh+C/GU/pNm9TJBFK9MRCInwBhXLkrYy5WnLT6GSh1CFBNRiHEphCEp+EPJiDDIfhTx/BVZjxi/dD0sdwdKdnmvF0d4pId7bEEb3mX8l3j7lYrxnPPR/rJ9HnejTpV1etQAAAABJRU5ErkJggg==");
+}
+
+accordion .panel-body {
+	padding: 5px;
+}
+
+accordion h4.panel-title {
+	font-weight: normal;
+	font-size: 14px;
+	position: relative;
+	line-height: 18px;
+}
+
+accordion h4.panel-title .actions {
+ 	position:absolute;
+ 	right:0px;
+ 	top: -2px;
+ }
+
+.panel-heading {
+	padding-right: 2px;
+}
+
+accordion .panel-heading {
+	padding-right: 5px;
+}
+
+accordion .panel-group {
+	padding-bottom: 2px;
+}
+
+accordion > div > div.disabled button#addArtifact {
+	display: none;
+}
+accordion > div > div.disabled a {
+	color: grey;
+}
+
+.panel-heading button {
+	float: right;
+}
+
+table.table-condensed tbody > tr > td, table.table-condensed thead > tr > th {
+	padding: 1px 2px 2px 2px;
+}
+
+table.table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+table.table-truncate > tbody > tr > td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+table.table > tbody > tr.disabled > td, table.table > tbody > tr.disabled > td a {
+	color: grey;
+	font-style: italic;
+}
+
+table.table > tbody > tr.hidden {
+	display: none;
+}
+
+table.table > tbody > tr >  td .trHoverOnly {
+	visibility: hidden;
+}
+
+table.table > tbody > tr:hover >  td .trHoverOnly {
+	visibility: visible;
+}
+
+a:focus {
+	outline: 0 !important;
+}
+
+.kwatee_title {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.undefined:before {
+	content: '<Undefined>';
+	color: grey;
+	font-style: italic;
+	font-size: 85%;
+}
+
+.tooltip-inner {
+    white-space:pre-wrap;
+}
+
+label {
+	width: 100%
+}
+
+label.platform {
+}
+
+.form-horizontal label.control-label {
+	font-size: 90%;
+	text-align: left;
+}
+
+.input-group-addon > label {
+	font-weight: normal;
+	margin-bottom: -2px;
+}
+
+.input-group-addon > label > input {
+	margin-right: 5px;
+}
+
+.nav-tabs {
+	font-size: 16px;
+}
+
+div.Tag {
+	cursor: default;
+	display: inline-block;
+	background-color: #FAFFFA;
+	border: solid 1px lightgrey;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	margin-right: 4px;
+	padding: 0px 0px 2px 5px;
+	width: 58px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+div.Tag:before {
+	content: 'x ';
+	color: red;
+	font-weight: bold;
+}
+
+fieldset {
+	margin: 10px 0 0;
+	border: 1px dotted grey;
+	padding: 5px;
+	clear: both;
+}
+
+fieldset legend {
+	font-size: 14px;
+	font-style: italic;
+	font-weight: bold;
+	padding: 4px;
+	margin-left: 50px;
+	margin-bottom: 0;
+	line-height: 22px;
+	border: none;
+	width: auto;
+}
+
+.progress .inprogress {
+	color: blue;
+}
+
+.progress .failed {
+	color: red;
+}
+
+.progress .ok {
+	color: green;
+}
+
+.progress .pending {
+	color: gray;
+}
+
+pre {
+	word-wrap:normal;
+	overflow-x:scroll;
+}
+
+.tooltip-inner {
+    max-width: 500px;
+    width: 500px; 
+}

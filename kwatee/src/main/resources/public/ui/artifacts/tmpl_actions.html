@@ -1,0 +1,33 @@
+<form name="form" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">Version Actions</h3>
+	</div>
+	
+	<div class="modal-body">
+		<div class="form-group">
+			<label>Pre-deploy
+				<input type="text" id="actionPreDeploy" ng-model="actions.preDeployAction" ng-disabled="readOnly" class="form-control" title="This action is executed just before this version is installed on a target server" auto-focus></input>
+			</label>
+		</div>
+		<div class="form-group">
+			<label>Post-deploy
+				<input type="text" id="actionPostDeploy" ng-model="actions.postDeployAction"  ng-disabled="readOnly" class="form-control" title="This action is executed right after this version is installed on a target server"></input>
+			</label>
+		</div>
+		<div class="form-group">
+			<label>Pre-undeploy
+				<input type="text" id="actionPreUndeploy" ng-model="actions.preUndeployAction"  ng-disabled="readOnly" class="form-control" title="This action is executed just before this version is removed from a target server"></input>
+			</label>
+		</div>
+		<div class="form-group">
+			<label>Post-undeploy
+				<input type="text" id="actionPostUndeploy" ng-model="actions.postUndeployAction"  ng-disabled="readOnly" class="form-control" title="This action is executed right after this version is removed from a target server"></input>
+			</label>
+		</div>
+	</div>
+	
+	<div class="modal-footer">
+	    <button type="button" id="cancel" class="btn" ng-click="$dismiss()">Cancel</button>
+	    <button type="submit" id="ok" class="btn btn-primary" ng-disabled="readOnly" ng-click="$close(actions)">OK</button>
+	</div>
+</form>

@@ -1,0 +1,372 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Kwatee Maven Plugin</title>
+	<link rel="stylesheet" type="text/css" href="../res/doc.css"/>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+       _gaq.push(['_setAccount', 'UA-22311236-1']);
+       _gaq.push(['_trackPageview']);
+      (function() {
+           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+	</script>
+</head>
+<body>
+	<h1>Kwatee Maven Plugin <small>version ${project.version}</small></h1>
+	<h2>Overview</h2>
+	<p>This plugin can be used to automate kwatee operation during the maven lifecycle.</p>
+	<h2>Goals Overview</h2>
+	<ul>
+		<li><a href="#goals">kwatee:create_version</a></li>
+		<li><a href="#goals">kwatee:delete_version</a></li>
+		<li><a href="#goals">kwatee:upload_package</a></li>
+		<li><a href="#goals">kwatee:set_active_version</a></li>
+		<li><a href="#goals">kwatee:tag_release</a></li>
+		<li><a href="#goals">kwatee:delete_release</a></li>
+		<li><a href="#goals">kwatee:deploy</a></li>
+		<li><a href="#goals">kwatee:download_installer</a></li>
+	</ul>
+
+	<h2>Usage</h2>
+	<p>To use the kwatee-maven-plugin you must first install it manually as follows:</p>
+	<pre>cd <em>kwatee distrib dir</em>/addOns/maven
+mvn install:install-file -Dfile=kwatee-maven-plugin-&lt;version&gt;.jar -DpomFile=pom.xml</pre>
+	<p>The Kwatee Maven Plugin allows you to update a kwatee repository by creating/deleting artifact versions, uploading new packages to versions, and triggering deployment operations.</p>
+	
+	<h2>Examples</h2>
+	<ul>
+		<li><a href='#example_create_upload'>Create version and upload package</a></li>
+		<li><a href='#example_active_version_and_tag'>Set active version and tag</a></li>
+		<li><a href='#example_deploy'>Deploy</a></li>
+		<li><a href='#example_download_installer'>Download Installer</a></li>
+	</ul>
+	
+	<a id="goals"></a>
+	<h2>Goals</h2>
+	<p>Goals available for this plugin:</p>
+	<table class="striped goals">
+		<tr>
+			<th>Goal</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td><a href="#create_version">kwatee:create_version</a></td>
+			<td>Creates a new version within an existing kwatee artifacts.</td>
+		</tr>
+		<tr>
+			<td><a href="#delete_version">kwatee:delete_version</a></td>
+			<td>Deletes an artifact's version.</td>
+		</tr>
+		<tr>
+			<td><a href="#update_package">kwatee:upload_package</a></td>
+			<td>Uploads a package to an existing artifact's version.</td>
+		</tr>
+		<tr>
+			<td><a href="#set_active_version">kwatee:set_active_version</a></td>
+			<td>Sets the active version of an artifact in an environment's release.</td>
+		</tr>
+		<tr>
+			<td><a href="#tag_release">kwatee:tag_release</a></td>
+			<td>Tags an environment snapshot.</td>
+		</tr>
+		<tr>
+			<td><a href="#delete_release">kwatee:delete_release</a></td>
+			<td>Deletes an environment's release.</td>
+		</tr>
+		<tr>
+			<td><a href="#deploy">kwatee:deploy</a></td>
+			<td>Deploy operations (deploy|undeploy|start|stop) on an environment's release.</td>
+		</tr>
+		<tr>
+			<td><a href="#download_installer">kwatee:download_installer</a></td>
+			<td>Download an installer for an environment's release.</td>
+		</tr>
+	</table>
+
+	<a id="create_version"></a>
+	<h3>kwatee:create_version</h3>
+	<p>Communicates with a kwatee instance to create or duplicate a version within an existing artifact.</p>
+	<h4>Required Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">serviceUrl</td><td class="description">base URL of a kwatee instance. This must be of the form:<br/><code>http://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;kwateePath&gt;</code></td></tr>
+		<tr><td class="name">artifact</td><td class="description">the artifact in which to create the new version.</td></tr>
+		<tr><td class="name">version</td><td class="description">the name of the version to create.</td></tr>
+	</table>
+	<h4>Optional Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">duplicateFrom</td><td class="description">the name of the version to duplicate.</td></tr>
+		<tr><td class="name">description</td><td class="description">The description of the newly created version.</td></tr>
+	</table>
+
+	<a id="delete_version"></a>
+	<h3>kwatee:delete_version</h3>
+	<p>Communicates with a kwatee instance to delete a version from an existing artifact.</p>
+	<h4>Required Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">serviceUrl</td><td class="description">base URL of a kwatee instance. This must be of the form:<br/><code>http://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;kwateePath&gt;</code></td></tr>
+		<tr><td class="name">artifact</td><td class="description">the version's artifact name.</td></tr>
+		<tr><td class="name">version</td><td class="description">the name of the version to delete.</td></tr>
+	</table>
+
+	<a id="update_package"></a>
+	<h3>kwatee:update_package</h3>
+	<p>Communicate with a kwatee instance to upload an package (maven artifact) to a kwatee version.</p>
+	<h4>Required Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">serviceUrl</td><td class="description">base URL of a kwatee instance. This must be of the form:<br/><code>http://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;kwateePath&gt;</code></td></tr>
+		<tr><td class="name">artifact</td><td class="description">the version's artifact.</td></tr>
+		<tr><td class="name">version</td><td class="description">the name of the version in which to upload the package.</td></tr>
+		<tr><td class="name">file</td><td class="description">the path of the package to upload.</td></tr>
+	</table>
+	<h4>Optional Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">deleteOverlays</td><td class="description">will delete existing overlays if true.</td></tr>
+	</table>
+
+	<a id="set_active_version"></a>
+	<h3>kwatee:set_active_version</h3>
+	<p>Communicates with a kwatee instance to set the active version of a artifact in the snapshot release of the specified environment.</p>
+	<h4>Required Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">serviceUrl</td><td class="description">base URL of a kwatee instance. This must be of the form:<br/><code>http://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;kwateePath&gt;</code></td></tr>
+		<tr><td class="name">environment</td><td class="description">the environment name.</td></tr>
+		<tr><td class="name">artifact</td><td class="description">the artifact name for which to set the active version.</td></tr>
+		<tr><td class="name">version</td><td class="description">the new active version name.</td></tr>
+	</table>
+	<h4>Optional Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">server</td><td class="description">the server to which the active version applies. If no server is specified, the active version will be the default for all servers in the environment.</td></tr>
+	</table>
+
+	<a id="tag_release"></a>
+	<h3>kwatee:tag_release</h3>
+	<p>Communicates with a kwatee instance to tag the snapshot release of the specified environment.</p>
+	<h4>Required Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">serviceUrl</td><td class="description">base URL of a kwatee instance. This must be of the form:<br/><code>http://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;kwateePath&gt;</code></td></tr>
+		<tr><td class="name">environment</td><td class="description">the environment name.</td></tr>
+		<tr><td class="name">release</td><td class="description">the name of the tagged release to create.</td></tr>
+	</table>
+	<h4>Optional Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">description</td><td class="description">a description for the tagged release.</td></tr>
+	</table>
+
+	<a id="delete_release"></a>
+	<h3>kwatee:delete_release</h3>
+	<p>Communicates with a kwatee instance to delete a release from the specified environment.</p>
+	<h4>Required Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">serviceUrl</td><td class="description">base URL of a kwatee instance. This must be of the form:<br/><code>http://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;kwateePath&gt;</code></td></tr>
+		<tr><td class="name">environment</td><td class="description">the release's environment name.</td></tr>
+		<tr><td class="name">release</td><td class="description">the name of the release to delete.</td></tr>
+	</table>
+
+	<a id="deploy"></a>
+	<h3>kwatee:deploy</h3>
+	<p>Communicates with a kwatee instance to trigger the deployment of a kwatee release and start/stop it's executables. To use it, declare:</p>
+	<h4>Required Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">serviceUrl</td><td class="description">base URL of a kwatee instance. This must be of the form:<br/><code>http://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;kwateePath&gt;</code></td></tr>
+		<tr><td class="name">environment</td><td class="description">the release's environment name.</td></tr>
+		<tr><td class="name">release</td><td class="description">the name of the release on which to perform operations.</td></tr>
+		<tr><td class="name">actions</td><td class="description">a list of deployment operations to perform, specified as <code>&lt;param&gt;</code><i>action</i><code>&lt;/param&gt;</code>...<code>&lt;param&gt;</code><i>action</i><code>&lt;/param&gt;</code>, where <i>action</i> may be any of <code>deploy|undeploy|start|stop</code>.</td></tr>
+	</table>
+	<h4>Optional Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">release</td><td class="description">the name of the release on which to perform operations (default: <b>snapshot</b>).</td></tr>
+		<tr><td class="name">artifact</td><td class="description">name of the release artifact to which the operation is applied (default: all artifacts).</td></tr>
+		<tr><td class="name">server</td><td class="description">name of the release server to which the operation is applied (default: all servers).</td></tr>
+	</table>
+
+	<a id="download_installer"></a>
+	<h3>kwatee:download_installer</h3>
+	<p>Communicates with a kwatee instance to download an installer that is deployable with kwclideployer. To use it, declare:</p>
+	<h4>Required Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">serviceUrl</td><td class="description">base URL of a kwatee instance. This must be of the form:<br/><code>http://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;kwateePath&gt;</code></td></tr>
+		<tr><td class="name">environment</td><td class="description">the environment name.</td></tr>
+		<tr><td class="name">file</td><td class="description">The file path of the downloaded installer file.</td></tr>
+	</table>
+	<h4>Optional Parameters</h4>
+	<table class="striped parameters">
+		<tr><th>Name</th><th>Description</th></tr>
+		<tr><td class="name">release</td><td class="description">the name of the release on which to perform operations (default: <b>snapshot</b>).</td></tr>
+	</table>
+
+	<h2>Examples</h2>
+	
+	<a id='example_create_upload'></a>
+	<h3>Create version and upload package</h3>
+	<p>The demowebsite version 1.0 is duplicated to preserve version variables and overlays and then a new artifact is uploaded.</p>
+	<pre class="example">...
+  &lt;build&gt;
+    &lt;plugins&gt;
+      ...
+      &lt;plugin&gt;
+        &lt;groupId&gt;net.kwatee.agiledeployment&lt;/groupId&gt;
+        &lt;artifactId&gt;kwatee-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;${kwatee_api_version}&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;id&gt;createVersion&lt;/id&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;create_version&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+              &lt;serviceUrl&gt;http://admin:password@kwatee.local:8080/kwatee&lt;/serviceUrl&gt;
+              &lt;artifact&gt;demowebsite&lt;/artifact&gt;
+              &lt;version&gt;1.1&lt;/version&gt;
+              &lt;duplicateFrom&gt;1.0&lt;/duplicateFrom&gt;
+              &lt;description&gt;created with maven&lt;/description&gt;
+            &lt;/configuration&gt;
+          &lt;/execution&gt;
+          &lt;execution&gt;
+            &lt;id&gt;uploadPackage&lt;/id&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;update_package&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+              &lt;serviceUrl&gt;http://admin:password@kwatee.local:8080/kwatee&lt;/serviceUrl&gt;
+              &lt;artifact&gt;demowebsite&lt;/artifact&gt;
+              &lt;version&gt;1.1&lt;/version&gt;
+              &lt;file&gt;&#36;{project.build.directory}/&#36;{project.artifactId}.zip&lt;/file&gt;
+            &lt;/configuration&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+      ...
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+...</pre>
+
+	<a id='example_active_version_and_tag'></a>
+	<h3>Set active version and tag</h3>
+	<p>The environment's active version for demowebsite is updated to 1.1 and then the snapshot is tagged.</p>
+	<pre class="example">...
+  &lt;build&gt;
+    &lt;plugins&gt;
+      ...
+      &lt;plugin&gt;
+        &lt;groupId&gt;net.kwatee.agiledeployment&lt;/groupId&gt;
+        &lt;artifactId&gt;kwatee-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;1.0.1&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;id&gt;updateActiveVersion&lt;/id&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;set_active_version&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+              &lt;serviceUrl&gt;http://admin:password@kwatee.local:8080/kwatee&lt;/serviceUrl&gt;
+              &lt;environment&gt;intro&lt;/environment&gt;
+              &lt;artifact&gt;demowebsite&lt;/artifact&gt;
+              &lt;version&gt;1.1&lt;/version&gt;
+            &lt;/configuration&gt;
+          &lt;/execution&gt;
+          &lt;execution&gt;
+            &lt;id&gt;tag&lt;/id&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;tag_release&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+              &lt;serviceUrl&gt;http://admin:password@kwatee.local:8080/kwatee&lt;/serviceUrl&gt;
+              &lt;environment&gt;intro&lt;/environment&gt;
+              &lt;release&gt;release1.1&lt;/release&gt;
+              &lt;description&gt;tagged by maven&lt;/description&gt;
+            &lt;/configuration&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+      ...
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+...</pre>
+
+	<a id='example_deploy'></a>
+	<h3>Download Installer</h3>
+	<p>Stop a possible previous snapshot, deploy and start.</p>
+	<pre class="example">...
+  &lt;build&gt;
+    &lt;plugins&gt;
+      ...
+      &lt;plugin&gt;
+        &lt;groupId&gt;net.kwatee.agiledeployment&lt;/groupId&gt;
+        &lt;artifactId&gt;kwatee-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;${kwatee_api_version}&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;id&gt;download_installer&lt;/id&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;download_installer&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+              &lt;serviceUrl&gt;http://admin:password@kwatee.local:8080/kwatee&lt;/serviceUrl&gt;
+              &lt;environment&gt;intro&lt;/environment&gt;
+              &lt;actions&gt;
+                &lt;param&gt;stop&lt;/param&gt;
+                &lt;param&gt;deploy&lt;/param&gt;
+                &lt;param&gt;start&lt;/param&gt;
+              &lt;/actions&gt;
+            &lt;/configuration&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+...</pre>
+
+
+	<a id='example_download_installer'></a>
+	<h3>Deploy</h3>
+	<p>Downloads the installer of an environment's release.</p>
+	<pre class="example">...
+  &lt;build&gt;
+    &lt;plugins&gt;
+      ...
+      &lt;plugin&gt;
+        &lt;groupId&gt;net.kwatee.agiledeployment&lt;/groupId&gt;
+        &lt;artifactId&gt;kwatee-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;${kwatee_api_version}&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;id&gt;deploy&lt;/id&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;deploy&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;configuration&gt;
+              &lt;serviceUrl&gt;http://admin:password@kwatee.local:8080/kwatee&lt;/serviceUrl&gt;
+              &lt;environment&gt;intro&lt;/environment&gt;
+              &lt;file&gt;&#36;{project.build.directory}/intro_installer.tar.gz&lt;/file&gt;
+            &lt;/configuration&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+...</pre>
+
+	
+</body>
+</html>

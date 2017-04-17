@@ -1,0 +1,22 @@
+<form name="modalForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">Create new server pool</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<label>Pool type
+				<select id="poolType" ng-options="p.id as p.name for p in poolTypes" ng-model="type" class="form-control"></select>
+			</label>
+		</div>
+		<div class="form-group" ng-class="{'has-error' : modalForm.poolName.$invalid}">
+			<label>Enter name
+				<input type="text" id="poolName" name="poolName" ng-model="name" class="form-control" required ng-pattern="/^[$A-Z_][0-9A-Z_$]*$/i" auto-focus></input>
+			</label>
+		</div>
+	</div>
+	
+	<div class="modal-footer">
+		<button id="cancel" type="button" class="btn" ng-click="$dismiss()">Cancel</button>
+		<button id="ok" type="submit" class="btn btn-primary" ng-disabled="modalForm.$invalid" ng-click="$close({'name': name, 'type': type})">OK</button>
+	</div>
+</form>

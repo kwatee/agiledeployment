@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.kwatee.agiledeployment</groupId>
+	<artifactId>agiledeployment</artifactId>
+	<version>4.0.3-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>kwatee-ganymed-ssh</module>
+		<module>kwatee</module>
+		<module>kwatee-api</module>
+		<module>kwatee-integration-test</module>
+		<module>ec2serverpool</module>
+		<module>kwatee-distrib</module>
+	</modules>
+	<properties>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<java.version>${maven.compiler.target}</java.version>
+		<slf4jVersion>1.7.5</slf4jVersion>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<kwatee_api_version>4.0</kwatee_api_version>
+		<kwatee_agent_version>4.0.9</kwatee_agent_version>
+		<kwatee_copyright>Designed and developed by Mallku Caballero</kwatee_copyright>
+	</properties>
+
+	<build>
+		<!-- ==================================================== -->
+		<!-- ==== Common plugins ================================ -->
+		<!-- ==================================================== -->
+		<!-- These plugin definitions are only inherited by -->
+		<!-- children when added to <plugins>...</plugins> -->
+		<pluginManagement>
+			<plugins>
+				<!-- Maven assembly plugin -->
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.5.2</version>
+				</plugin>
+				<!-- Maven unit testing plugin -->
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.15</version>
+				</plugin>
+				<!-- Maven cleanup plugin -->
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<!-- Maven release plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.3</version>
+				</plugin>
+				<!-- Maven resources plugin -->
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<!-- Maven compiler plugin basic configuration -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<encoding>UTF-8</encoding>
+					<compilerArgument>-proc:none</compilerArgument>
+				</configuration>
+			</plugin>
+			<!-- Deploy sources and javadoc -->
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>clean</phase>
+						<id>set-release-versions</id>
+						<configuration>
+							<autoVersionSubmodules>true</autoVersionSubmodules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<scm>
+		<developerConnection>scm:git:git@bitbucket.org:mac42/agiledeployment.git</developerConnection>
+	</scm>
+
+	<organization>
+		<name>Kwatee</name>
+		<url>http://kwatee.net</url>
+	</organization>
+</project>

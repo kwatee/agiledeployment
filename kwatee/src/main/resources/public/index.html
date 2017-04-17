@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Kwatee</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="ui/css/bootstrap.min.css" />
+<link rel="stylesheet" href="ui/css/kwtree.css" />
+<link rel="stylesheet" href="ui/css/kwatee.css" />
+<link rel="stylesheet" href="ui/css/icon.css" />
+<script src="ui/js/jquery-1.11.1.min.js"></script>
+<script src="ui/js/angular.min.js"></script>
+<script src="ui/js/angular-cookies.min.js"></script>
+<script src="ui/js/angular-route.min.js"></script>
+<script src="ui/js/ui-bootstrap-tpls-0.14.3.min.js"></script>
+<script src="ui/js/kwtree.js"></script>
+<script src="ui/js/kwatee-api.js"></script>
+<script src="ui/js/ng-breadcrumbs.js"></script>
+<script src="ui/js/ngStorage.min.js"></script>
+<script src="ui/kwateeApp.js"></script>
+<script src="ui/artifacts/module.js"></script>
+<script src="ui/artifacts/controllers.js"></script>
+<script src="ui/servers/module.js"></script>
+<script src="ui/servers/controllers.js"></script>
+<script src="ui/environments/module.js"></script>
+<script src="ui/environments/controllers.js"></script>
+<script src="ui/deployments/module.js"></script>
+<script src="ui/deployments/controllers.js"></script>
+<script src="ui/admin/module.js"></script>
+<script src="ui/admin/controllers.js"></script>
+</head>
+
+<body ng-app="kwatee" ng-controller="kwateeController">
+	<div class="container">
+		<div class="row" style="margin-top: 2px;">
+			<img src="ui/img/logo.png" /> <img src="ui/img/kwateeagile.png"
+				style="width: 266px; height: 15px; margin-left: 3px" /> <span
+				style="margin-left: 25px; font-size: 10px; color: #525d76;">{{kwateeInfo.organization}}</span>
+			<a href="http://kwatee.net" style="margin-left: 30px;"><img
+				src="http://kwatee.net/img/version/${project.version}.gif" alt=""></img></a>
+		</div>
+		<div class="row" style="position: relative" ng-if="kwateeInfo.user">
+			<ul class="nav nav-tabs" nav-menu>
+				<li id="artifacts"><a href="#/artifacts"
+					style="margin-left: 22px">Repository</a></li>
+				<li id="servers"><a href="#/servers">Servers</a></li>
+				<li id="environments"><a href="#/environments">Environments</a></li>
+				<li id="deployments"><a href="#/deployments">Deploy</a></li>
+				<li id="admin"><a href="#/admin">Admin</a></li>
+			</ul>
+			<div style="position: absolute; right: 0; top: 10px">
+				<label
+					style="display: inline; font-weight: normal; margin: 0; font-size: 11px"><input
+					type="checkbox" ng-model="$prefs.hideDisabled"
+					style="margin-right: 4px" />Hide disabled</label>&nbsp; <a
+					href="#/admin/users/{{kwateeInfo.user}}"><small><em>{{kwateeInfo.user}}</em></small></a>&nbsp;
+				<a id="logout" href="#/logout" ng-if="kwateeInfo.user"><small>[logout]</small></a>
+			</div>
+			<ol class="ab-nav breadcrumb" style="margin-bottom: 15px">
+				<li
+					ng-repeat="breadcrumb in breadcrumbs.get() track by breadcrumb.path"
+					ng-class="{ active: $last }"><a ng-if="!$last"
+					ng-href="#{{ breadcrumb.path }}" ng-bind="breadcrumb.label"></a> <span
+					ng-if="$last" ng-bind="breadcrumb.label"></span></li>
+				<li ng-if="loading" style="position: relative"><img
+					src="ui/img/loading.gif"
+					style="height: 24px; width: 250px; position: absolute; top: -2px">
+				</li>
+			</ol>
+			<ul ng-if="isAdmin()" class="nav nav-links">
+				<li id="usr"><a href="#/admin/users">Users</a></li>
+				<li id="var"><a href="#/admin/variables">Variables</a></li>
+				<li id="prm"><a href="#/admin/parameters">Parameters</a></li>
+				<li id="maint"><a href="#/admin/maintenance">Maintenance</a></li>
+			</ul>
+		</div>
+		<ng-view></ng-view>
+		<div class="row" ng-if="kwateeInfo.user"
+			style="margin-top: 20px; font-size: 10px; font-style: italic; color: #525d76; word-wrap: no-wrap; clear: left;">
+			{{kwateeInfo.copyright}} - <a href="http://kwatee.net"
+				title="{{kwateeInfo.version}}">kwatee</a>
+		</div>
+	</div>
+</body>
+</html>

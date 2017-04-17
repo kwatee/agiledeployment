@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Kwatee REST API</title>
+	<link rel="stylesheet" type="text/css" href="../res/doc.css"/>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+       _gaq.push(['_setAccount', 'UA-22311236-1']);
+       _gaq.push(['_trackPageview']);
+      (function() {
+           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+	</script>
+
+	<style>
+.api_controller_separator {
+	
+}
+
+
+.api_toc_method_link {
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
+table.api_parameters {
+	border-spacing: 15px 5px;
+}
+
+table.api_parameters td{
+	border:1px solid #d4d4d4;padding:5px;padding-top:7px;padding-bottom:7px;vertical-align:top;
+	vertical-align: middle;
+}
+
+.api_parameter_annotation {
+	font-size: 80%;
+	width: 75px;
+}
+
+.api_parameter_description {
+}
+
+.api_parameter_type {
+	text-align: center;
+	width: 150px;
+}
+
+.api_parameter_required {
+	text-align: center;
+	width: 90px;
+}
+
+.api_parameter_value {
+	text-align: center;
+	width: 90px;
+}
+
+.example {
+	margin-left: 30px;
+	color:#006;
+	background-color:#eee;
+	border:1px dashed #333333;
+	width: 90%;
+	padding: 10px;
+}
+
+.example table td {
+	vertical-align: top;
+}
+
+.example table tr td:first-child {
+	text-decoration: underline;
+	padding-right: 10px;
+}
+
+.description { font-style: italic }
+
+.requestBody, .responseBody {
+	margin-top: 0;
+}
+
+.error { color: red }
+
+	</style>
+</head>
+<body class='api_body'>
+	#########################################################
+	## Controllers   
+	#########################################################
+	#foreach($docController in $controllers)
+		<div class="header">
+			<h1>Kwatee REST API <small>version ${project.version}</small></h1>
+			<p class="excerpt">Mapping of URIs that begin with <code>/kwatee/api</code></p>
+		</div>
+		<div class="api_controller_separator"></div>
+		#########################################################
+		## Methods  TOC
+		#########################################################
+		<table class='striped api_toc'>
+		<tr><th colspan=2 class='caption'>REST Commands Summary</th></tr>
+		#foreach($docMethod in $docController.getMethods())
+			#set($methodUri = "/kwatee/api" + $docMethod.getUri())
+			#foreach($httpMethod in $docMethod.getHttpMethods())
+				<tr>
+				<td>
+					<a href="#REST_API-$methodUri" class='api_toc_method_link'>$httpMethod.getRestInfo().getDescription()</a>
+				</td>
+				<td>
+					#if($httpMethod.getDescription() && !$httpMethod.getDescription().isEmpty())
+						<p class='description'>$httpMethod.getDescription().split("\.")[0]</p>
+					#end
+				</td>
+				</tr>
+			#end
+		#end
+		</table>
+		<div class="separator"></div>
+		#########################################################
+		## Methods 
+		#########################################################
+		#foreach($docMethod in $docController.getMethods())
+			#set($methodUri = "/kwatee/api" + $docMethod.getUri())
+			## http methods 
+			#foreach($httpMethod in $docMethod.getHttpMethods())
+				#set($httpMethodName = $httpMethod.getHttpMethodName())
+				#set($restInfo = $httpMethod.getRestInfo())
+				<h2 id="REST_API-$methodUri">$restInfo.getDescription()</h2>
+				<h3><code>$httpMethodName $methodUri</code></h3>
+				#if($docMethod.getDescription() && !$docMethod.getDescription().isEmpty())
+					<p><font color="#f7681a">$docMethod.getDescription()</font></p>
+				#end
+				#if($httpMethod.getDescription() && !$httpMethod.getDescription().isEmpty())
+					<p class='description'>$httpMethod.getDescription()</p>
+				#end
+				#########################################################
+				## Parameters 
+				#########################################################
+				#set($params = $httpMethod.getAnnotatedParams())
+				#if($params && !$params.isEmpty())
+					<h3>Parameters</h3>
+					<table class='striped api_parameters'>
+						<tr>
+							<th style='text-align: left;padding-left:67px' colspan='2'>Name</th>
+							<th style='text-align: left'>Description</th>
+							<th style='text-align: center'>Type</th>
+							<th style='text-align: center'>Mandatory</th>
+						</tr>
+						#foreach($docParameter in $params)
+							<tr>
+								<td class='api_parameter_annotation'>
+									$docParameter.getLocation()
+								</td>
+								<td class='api_parameter_name'>
+								#if($docParameter.getRequestParamAnnotation() && $docParameter.getRequestParamAnnotation().getValue() && !$docParameter.getRequestParamAnnotation().getValue().isEmpty())
+									$docParameter.getRequestParamAnnotation().getValue()
+								#else
+									$docParameter.getName()
+								#end
+								</td>
+								<td class='api_parameter_description'>
+								#if ($docParameter.getDescription())
+									<i>$docParameter.getDescription()</i>
+								#end
+								</td>
+								<td class='api_parameter_type'><code>$docParameter.getType().simpleTypeName()</code></td>
+								<td class='api_parameter_required'><code>$docParameter.isRequired()</code></td>
+							</tr>
+						#end
+					</table>
+				#end
+				<h3>Response</h3>
+				#if($httpMethod.getReturnDetails())
+					<p class='returns'>Returns $httpMethod.getReturnDetails()</p>
+				#end
+				#if ($restInfo.getStatuses())
+					#set($possibleResponses = $restInfo.getStatuses())
+					<ul>
+					#foreach($docResponseStatus in $possibleResponses)
+						<li>$docResponseStatus</li>
+					#end
+					</ul>
+				#end
+				#########################################################
+				## Example 
+				#########################################################
+				#if($restInfo.getExampleRequest()) 
+					<h3>Example</h3>
+					<div class='example'>
+					#if($restInfo.getExampleDescription())
+						<p class='comments'>$restInfo.getExampleDescription()</p>
+					#end
+					<table>
+					<tr>
+						<td>Request</td>
+						<td><code>$httpMethodName $restInfo.getExampleRequest()</code>
+							#if($restInfo.getExampleRequestBody())
+								<pre class='requestBody'>$restInfo.getExampleRequestBody()</pre>
+							#end
+						</td>
+					</tr>
+					<tr >
+						<td>Response</td>
+						<td><code>$restInfo.getExampleResponse()</code>
+							#if($restInfo.getExampleResponseBody())
+								<pre class='responseBody'>$restInfo.getExampleResponseBody()</pre>
+							#end
+						</td>
+					</tr>
+					</table>
+					</div>
+				#end
+			#end
+		#end
+	#end
+</body>
+</html>

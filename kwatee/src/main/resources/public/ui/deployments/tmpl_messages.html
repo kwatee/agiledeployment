@@ -1,0 +1,12 @@
+<form name="modalForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">Status messages</h3>
+	</div>
+	<div class="modal-body">
+		<pre style="font-size:80%">{{messages || 'no status yet'}}</pre>
+	</div>
+
+	<div class="modal-footer">
+		<button type="submit" class="btn" ng-click="$dismiss()">Done</button>
+	</div>
+</form>

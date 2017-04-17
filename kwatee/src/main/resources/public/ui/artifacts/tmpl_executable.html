@@ -1,0 +1,36 @@
+<form name="modalForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">Executable info</h3>
+	</div>
+
+	<div class="modal-body">
+		<div class="form-group" ng-class="{'has-error' : modalForm.exeName.$invalid}">
+			<input type="text" name="exeName" ng-model="executable.name" ng-readonly="readOnly" placeHolder="Executable name" class="form-control" required ng-disabled="!isNew" ng-pattern="/^[$A-Z_][0-9A-Z_$]*$/i"></input>
+		</div>
+		<div class="form-group">
+			<label>Description
+				<input type="text" id="exeDescription" ng-model="executable.description" ng-readonly="readOnly" class="form-control"></input>
+			</label>
+		</div>
+		<div class="form-group">
+			<label>Start action
+				<input type="text" id="exeStartAction" ng-model="executable.startAction" ng-readonly="readOnly" class="form-control" auto-focus></input>
+			</label>
+		</div>
+		<div class="form-group">
+			<label>Stop action
+				<input type="text" id="exeStopAction" ng-model="executable.stopAction" ng-readonly="readOnly" class="form-control"></input>
+			</label>
+		</div>
+		<div class="form-group">
+			<label>Status action
+				<input type="text" id="exeStatusAction" ng-model="executable.statusAction" ng-readonly="readOnly" class="form-control"></input>
+			</label>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" id="cancel" class="btn" ng-click="$dismiss()">Cancel</button>
+		<button type="submit" id="ok" class="btn btn-primary" ng-disabled="readOnly || modalForm.$invalid" ng-click="$close(executable)">OK</button>
+	</div>
+</form>

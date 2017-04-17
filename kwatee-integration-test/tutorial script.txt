@@ -1,0 +1,64 @@
+Kwatee makes software deployment easy by providing powerful tools via a simple web interface.
+You can manage different configuration sets for development, test or production environments and deploy
+in local servers, data centers, or in the cloud
+
+This short overview will give you a sense of kwatee's capabilities
+without going into the full details of all its features.
+
+We begin by signing into the configuration management application
+using the factory default user and password.
+
+Kwatee's functions are divided in four areas:
+- The Repository where software components are defined and archived.
+- The Servers area in which connection profiles to target servers are configured.
+- The Environments where artifact parameters can be customized per deployment context and target server
+- and finally, the deployments area where the actual deploy and undeploy operations are carried out
+
+Firstly, we create an artifact where each version describes the characteristics of a specific
+software package version you wish to deploy.
+
+The main component of an artifact's version is the software package you associate to it.
+We can select the operating systems for which we know our package to be suitable and
+then upload the actual package to the repository.
+
+Kwatee can handle the most common archive types and automatically examines their contents
+in order to scan for the presence of kwatee variables within the package's files.
+These variables, which have a distinctive pattern, can be thought of as environment variables whose value can be
+configured within kwatee and that are instantiated during deployment.
+
+A generic default value may be given but environment-dependent values can also be defined as we will see in a minute.
+
+Notice the breadcrumb bar which is a common method of navigation within kwatee.
+Of course, you can use your browser's back function as well.
+
+The next step is to configure a kwatee server which defines the connection parameters to our deployment target.
+This configuration consists mainly in the server platform, or operating system, the ip address and port,
+the connection method, and the login parameters.
+Note that you may alternatively supply a private ssh key or ask kwatee to prompt for the password during deployment.
+
+The configuration can be quickly tested to make sure everything is all right.
+
+We wrap up the configuration by setting up an environment in which we select the subset of necessary artifacts and servers to be used.
+The environment may contain several releases which are archives of earlier configuration sets but only
+one of these releases, the snapshot can be edited.
+In the release we assign the desired artifact to it's target server and select the actual version to install.
+
+Finally we can see that some variables don't have a defined value so we enter the variables editor...
+The artifact's CUSTOMER_NAME variable must be specified but we can also change the default value
+of the deployment location by pointing the system kwatee_package_dir variable to our web server's
+directory.
+
+Configuration is completed and the environment is ready to be deployed which is done by the simple click of a button.
+A quick check show that our example site has been properly deployed but while the customer name is personalized the
+corresponding logo still remains generic.
+We can improve on that by returning to the configuration and uploading a custom logo which will overlay the existing
+default one only for this particular deployment.
+
+Back to deployments in order to update our application; and now we can see that the site is fully customized.
+
+At this point of a release cycle, it is good practice to archive the release configuration to make it possible
+to quickly and safely roll back future deployed changes to a stable state, if needed.
+
+This concludes the introductory presentation. Check out the documentation to find out about more advanced features of kwatee,
+including the ability of carrying out fully automated deployments with the stand-alone command line deployer tool.
+

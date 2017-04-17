@@ -1,0 +1,11 @@
+Launch kwatee with:
+    ./kwatee.sh
+
+To operate kwatee as a daemon:
+    ./kwatee.sh start|stop|restart|status
+
+kwatee configuration parameters can be adjusted in:
+    kwatee.properties
+
+Read the changelog's "IMPORTANT NOTES" for additional update instructions from your current version.
+Detailed documentation can be found at http://www.kwatee.net/doc or in the docs directory

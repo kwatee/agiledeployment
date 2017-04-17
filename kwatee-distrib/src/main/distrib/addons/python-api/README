@@ -1,0 +1,5 @@
+Install the kwatee egg using the command:
+
+(sudo) easy_install kwatee-${project.version}-py2.7.egg
+
+Detailed documentation can be found at http://www.kwatee.net/doc or in the docs directory

@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Kwatee Installation Guide</title>
+	<link rel="stylesheet" type="text/css" href="../res/doc.css" />
+	<link href="../res/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../res/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+	<link href="../res/featherlight.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="../res/jquery.js"></script>
+	<script type="text/javascript" src="../res/featherlight.min.js"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+       _gaq.push(['_setAccount', 'UA-22311236-1']);
+       _gaq.push(['_trackPageview']);
+      (function() {
+           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+	</script>
+</head>
+<body>
+<div class="container">
+	<h1>Kwatee Installation Guide <small>version ${project.version}</small></h1>
+
+	<h2>Introduction</h2>
+	<div class="row">
+		<div class="col-xs-12 col-sm-10">
+			<p style="margin-top:6px">Kwatee web application the is package as a standalone executable jar which does not require.
+			an additional servlet container such as Tomcat or Jetty. Kwatee uses an internal H2 database by defaut but can be configured
+			to use mysql or postgres and runs any operating system with Java 7 or newer.
+			It has been tested on MacOS, Ubuntu and Windows but will run on any other flavor of linux or unix as well.</p>
+			<p>In either case, Kwatee self-deploys a proprietary and platform-specific agent (kwagent or kwagent.exe). At this time, there are agents for:
+			<ul>
+				<li>linux</li>
+				<li>Solaris x86</li>
+				<li>Solaris sparc</li>
+				<li>MacOS X</li>
+				<li>Windows</li>
+				<li>AIX</li>
+			</ul></p>
+		</div>
+	</div>
+
+	<h2>Pre-requisites</h2>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12">
+			<p>Kwatee is not very resource intensive so there is no need to dedicate a full server to it's operations.</p>
+			<div class="panel panel-info">
+				<div class="panel-heading">Prerequisites</div>
+				<table class="table table-striped">
+					<colgroup><col width="180" /></colgroup>
+						<tbody>
+						<tr><td><i>Java</i></td><td>version 1.7 or newer</td></tr>
+						<tr><td><i>Database</i></td><td>Kwatee uses an embedded H2 by default but you may configure it to use MySQL 5.1+ or PostgreSQL 8.4+.</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<h2>Installation</h2>
+	<h3>1. Expand the archive</h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<img src="img/screenshots/thumbnails/distribution.png" style="width: 120px" alt="" />
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Expand the <var>kwatee-distrib-${project.version}</var> archive.
+			Well refer to the path of the expanded directory as <i>KWATEE_HOME</i></p>
+		</div>
+	</div>
+
+	<h3>2. Edit kwatee.properties</h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<img src="img/screenshots/thumbnails/webapp.png" style="width: 120px" alt="" />
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>Edit <code>KWATEE_HOME/kwatee.properties</code> and customize the properties.</p>
+			<a id="kwatee.properties"></a>
+			<div class="panel panel-info">
+				<div class="panel-heading">Kwatee properties</div>
+				<table class="table table-striped">
+					<colgroup><col width="170" /></colgroup>
+					<tr><th>Property</th><th>Description</th></tr>
+					<tr><td><var>server.port</var></td><td>The port on which the kwatee web application will listen (default 8080)</td></tr>
+					<tr><td><var>kwatee.repository.path</var></td><td>the path to the repository directory (default: <code>KWATEE_HOME/repository</code>)</td></tr>
+					<tr><td><var>kwatee.jdbc.schema</var></td><td>the name of the kwatee database</td></tr>
+					<tr><td><var>kwatee.jdbc.user</var></td><td>the kwatee database user</td></tr>
+					<tr><td><var>kwatee.jdbc.password</var></td><td>the password of the database user</td></tr>
+					<tr><td><var>kwatee.jdbc.driver</var></td><td>the database driver</td></tr>
+					<tr><td><var>kwatee.jdbc.url</var></td><td>the jdbc connection url whose format is specific to the jdbc driver</td></tr>
+					<tr><td><var>logging.path</var></td><td>directory where kwatee.log will be written (default: <code>KWATEE_HOME/log</code>)</td></tr>
+				</table>
+			</div>
+			<div class="alert alert-warning">FOR WINDOWS:</span> if you choose to replace default paths by windows paths, you must make sure to use double backslashes, i.e. <code>kwatee.repository.path=d:\\kwatee\\repository</code>, or to replace them by forward slashes, i.e. <code>kwatee.repository.path=d:/kwatee/repository</code>.</div>
+	<h4>Other databases</h4>				
+			<p>The default kwatee.properties are suitable for an installation on a file-based <em>H2</em> database:</p>
+			<pre class="example">kwatee.jdbc.driver=org.h2.Driver
+kwatee.jdbc.url=jdbc:h2:/${kwatee.repository.path}/db/${kwatee.jdbc.schema}</pre>
+
+			<p>The properties below are suitable for an installation on a <em>mysql</em> database:</p>
+			<pre class="example">kwatee.jdbc.driver=com.mysql.jdbc.Driver
+jdbc:mysql://localhost/${kwatee.jdbc.schema}</pre>
+
+			<p>The properties below are suitable for an installation on a <em>postgresql</em> database:</p>
+			<pre class="example">kwatee.jdbc.driver=org.postgresql.Driver
+kwatee.jdbc.url=jdbc:postgresql://localhost/${kwatee.jdbc.schema}</pre>
+		</div>
+	</div>
+	<h4>Optional SSL Configuration</h4>
+	<div class="row">
+	<p>If you want to configure SSL, you must first generate a key-pair. On linux:</p>
+	<pre class="example">keytool -genkey -alias kwatee -storetype PKCS12 -RSA -keysize 2048 -keystore keystore.p12 -validity 3650</pre>
+	Enter the password (<code>&lt;password&gt;</code>) and additional details for which you are prompted. After that, simply add the following properties in your <code>kwatee.properties</code> file:
+	<pre class="example">server.ssl.key-store=keystore.p12
+server.ssl.key-store-password=&lt;password&gt;
+server.ssl.keyStoreType=PKCS12
+server.ssl.keyAlias=kwatee</pre>
+	</div>
+
+	<h3>3. Launch Kwatee</h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/create_db.png" data-featherlight="image"><img src="img/screenshots/thumbnails/create_db.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			on linux
+			<pre>KWATEE_HOME/kwatee.sh start</pre>
+			on windows
+			<pre>KWATEE_HOME\kwatee.bat start</pre>
+			and then point your browser to <code>http://<i>KwateeServer</i>:8080/kwatee/</code>
+			<p>The web interface will guide you through the steps for creating the database schema which will require you to supply <code>kwatee.jdbc.user</code> and <code>kwatee.jdbc.password</code> that must have sufficient privileges for creating users and a database.</p>
+			<p>Once this final step is completed, you'll see Kwatee's login screen. The default administrator user is <code>admin</code> with password <code>password</code>.</p>
+		</div> 
+	</div> 
+
+	<h2>Upgrading</h2>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2">
+			<a href="img/screenshots/upgrade_db.png" data-featherlight="image"><img src="img/screenshots/thumbnails/upgrade_db.gif" style="width: 120px" alt="" /></a>
+		</div>
+		<div class="col-xs-12 col-sm-10">
+			<p>The following procedure is recommended when upgrading to a new version of kwatee:</p>
+			<ol>
+				<li>Stop Kwatee with <pre>KWATEE_HOME/kwatee.sh stop</pre> or <pre>KWATEE_HOME\kwatee.bat stop</pre></li>
+				<li>Rename <i>KWATEE_HOME</i> to <i>KWATEE_HOME.old</i></li>
+				<li>Expand the kwatee-distrib package that you downloaded from kwatee.net to <i>KWATEE_HOME</i></li>
+				<li>Copy <code>KWATEE_HOME.old/kwatee.properties</code> to <code>KWATEE_HOME/kwatee.properties</code></li>
+				<li>If you kept your repository at <code>KWATEE_HOME/repository</code> then move it back from <i>KWATEE_HOME.old</i> to <i>KWATEE_HOME</i></li>
+				<li>Start Kwatee with <pre>KWATEE_HOME/kwatee.sh start</pre> or <pre>KWATEE_HOME\kwatee.bat start</pre></li>
+				<li>Point your browser to <code>http://<i>KwateeServer</i>:8080/kwatee/</code></li>
+			</ol>
+		</div>
+	</div>
+</div>
+</body>
+</html>

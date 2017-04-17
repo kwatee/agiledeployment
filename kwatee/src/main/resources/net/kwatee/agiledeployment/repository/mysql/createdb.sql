@@ -1,0 +1,4 @@
+CREATE database if not exists @KWATEE_DB_SCHEMA;
+CREATE user '@KWATEE_DB_USER'@'%' identified by '@KWATEE_DB_PASSWORD';
+GRANT ALL on @KWATEE_DB_SCHEMA.* to '@KWATEE_DB_USER'@'%' identified by '@KWATEE_DB_PASSWORD';
+FLUSH PRIVILEGES;

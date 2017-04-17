@@ -1,0 +1,4 @@
+There are no additional java dependencies for using kwatee-api-java-${project.version}.jar.
+Note the the kwatee-maven-plugin uses kwatee-api-java.
+
+Detailed documentation can be found at http://www.kwatee.net/doc or in the docs directory

@@ -1,0 +1,1 @@
+-- INSERT INTO KWATEESystemProperty (name, value, description, pos) VALUES ('kwatee_schema_version', '1.0.0', null, 0);

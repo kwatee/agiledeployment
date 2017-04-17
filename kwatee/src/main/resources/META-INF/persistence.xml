@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+
+	<persistence-unit name="kwateePU" transaction-type="RESOURCE_LOCAL">
+		<!-- mapping-file>META-INF/orm.xml</mapping-file -->
+		<!-- Type custom defining -->
+		<class>net.kwatee.agiledeployment.repository.entity.User</class>
+		<class>net.kwatee.agiledeployment.repository.entity.Authority</class>
+		<class>net.kwatee.agiledeployment.repository.entity.Artifact</class>
+		<class>net.kwatee.agiledeployment.repository.entity.Version</class>
+		<class>net.kwatee.agiledeployment.repository.entity.Executable</class>
+		<class>net.kwatee.agiledeployment.repository.entity.Environment</class>
+		<class>net.kwatee.agiledeployment.repository.entity.Server</class>
+		<class>net.kwatee.agiledeployment.repository.entity.ServerCredentials</class>
+		<class>net.kwatee.agiledeployment.repository.entity.ServerProperty</class>
+		<class>net.kwatee.agiledeployment.repository.entity.RepositoryFile</class>
+		<class>net.kwatee.agiledeployment.repository.entity.SystemProperty</class>
+		<class>net.kwatee.agiledeployment.repository.entity.Release</class>
+		<class>net.kwatee.agiledeployment.repository.entity.ReleaseVariable</class>
+		<class>net.kwatee.agiledeployment.repository.entity.ReleaseArtifact</class>
+		<class>net.kwatee.agiledeployment.repository.entity.EnvironmentArtifact</class>
+		<class>net.kwatee.agiledeployment.repository.entity.EnvironmentServer</class>
+		<class>net.kwatee.agiledeployment.repository.entity.VersionVariable</class>
+		<class>net.kwatee.agiledeployment.repository.entity.ApplicationParameter</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+	</persistence-unit>
+</persistence>

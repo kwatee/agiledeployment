@@ -1,0 +1,22 @@
+<form name="varcharForm" class="form-horizontal" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">New version variable prefix</h3>
+	</div>
+	<div class="modal-body" ng-init="newChar=''">
+		<div class="form-group"
+			ng-class="{'has-error' : varcharForm.prefixChar.$invalid}">
+			<label for="prefixChar" class="col-sm-6 control-label">Prefix character:</label>
+			<div class="col-sm-3">
+				<input type="text" id="prefixChar" name="prefixChar"
+					ng-model="newChar" class="form-control" placeHolder='%'
+					maxlength="1" size="1" style="width: 40px" required
+					ng-pattern="/./i" auto-focus></input>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button id="cancel" type="button" class="btn" ng-click="$dismiss()">Cancel</button>
+		<button id="ok" type="submit" class="btn btn-primary"
+			ng-disabled="varcharForm.$invalid" ng-click="$close(newChar)">OK</button>
+	</div>
+</form>

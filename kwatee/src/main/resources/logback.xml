@@ -1,0 +1,46 @@
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<property name="KWATEE_LOG_PATTERN" value="%d{YYYY-MM-dd HH:mm:ss} %5p %logger: %m%n%wex" />
+	<property name="LOG_PATH" value="${LOG_PATH:-${java.io.tmpdir:-/tmp}}"/>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%clr(%d{MMM-dd HH:mm:ss}){faint} %clr(%5p) %clr(%logger){cyan} %clr(:){faint} %m%n%wex</pattern>
+		</encoder>
+	</appender>
+	<appender name="AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/audit.log</file>
+		<encoder>
+			<pattern>${KWATEE_LOG_PATTERN}</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/audit.%i</fileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>100MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/kwatee.log</file>
+		<encoder>
+			<pattern>${KWATEE_LOG_PATTERN}</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/kwatee.%i</fileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>100MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<logger name="audit" level="INFO">
+		<appender-ref ref="AUDIT" />
+	</logger>
+
+	<logger name="net.kwatee.agiledeployment" level="INFO" />
+
+	<root level="WARN" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>

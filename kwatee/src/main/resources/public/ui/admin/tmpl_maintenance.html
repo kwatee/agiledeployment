@@ -1,0 +1,11 @@
+<div class="jumbotron">
+	<p>You can export your kwatee configuration to restore it at a later time via import. This function is useful to migrate a configuration from one computer to another or from one database type to another.</p>
+	<alert type="warning"><small>Repository files must be transfered manually when moving kwatee from one computer to another.</small></alert>
+	<p>After a successful import you will need to login again.</p>
+	<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+	<div class="row" style="margin-top: 25px">
+		<div style="width:300px;margin-left:auto;margin-right:auto">
+			<button type="button" id="exportDB" class="btn btn-info btn-lg pull-right" ng-click="exportDB()">Export</button>
+		</div>
+	</div>
+</div>

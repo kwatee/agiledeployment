@@ -1,0 +1,45 @@
+<form name="modalForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">Variable editor</h3>
+	</div>
+
+	<div class="modal-body">
+		<div class="form-group" ng-class="{'has-error' : modalForm.varName.$invalid}">
+			<input type="text" name="varName" ng-model="variable.name" ng-disabled="readOnly" class="form-control" placeHolder="Variable name" required ng-disabled="!isNew" ng-pattern="/^[$A-Z_][0-9A-Z_\-$]*$/i"></input>
+		</div>
+		<div class="form-group">
+			<label>Description
+				<input type="text" id="varDescription" ng-model="variable.description" ng-disabled="readOnly" class="form-control"></input>
+			</label>
+		</div>
+		<div class="form-group">
+			<label>Value
+				<input type="text" id="varValue" ng-model="variable.value" ng-disabled="readOnly" class="form-control" auto-focus></input>
+			</label>
+		</div>
+		<fieldset>
+			<legend>Scope</legend>
+			<div class="form-group">
+				<label>Server
+					<select id="forServer" class="form-control" ng-model="variable.server" ng-disabled="readOnly" name="server">
+						<option value="">&lt;any&gt;</option>
+						<option ng-repeat="s in servers">{{s}}</option>
+					</select>
+				</label>
+			</div>
+			<div class="form-group">
+				<label>Artifact
+					<select id="forArtifact" class="form-control" ng-model="variable.artifact" ng-disabled="readOnly" name="server">
+						<option value="">&lt;any&gt;</option>
+						<option ng-repeat="a in artifacts">{{a}}</option>
+					</select>
+				</label>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" id="cancel" class="btn" ng-click="$dismiss()">Cancel</button>
+		<button type="submit" id="ok" class="btn btn-primary" ng-disabled="readOnly || modalForm.$invalid" ng-click="$close(variable)">OK</button>
+	</div>
+</form>

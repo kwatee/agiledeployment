@@ -1,0 +1,13 @@
+*.a
+*.o
+*.d
+application.pid
+target/
+kwatee/log/
+.DS_Store
+.project
+.cproject
+.settings/
+.classpath
+.externalToolBuilders/
+

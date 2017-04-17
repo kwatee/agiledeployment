@@ -1,0 +1,14 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.kwatee.agiledeployment</groupId>
+	<artifactId>kwatee-maven-plugin</artifactId>
+	<version>${kwatee_api_version}</version>
+	<packaging>maven-plugin</packaging>
+	<name>Kwatee Maven Plugin</name>
+	<description>Kwatee plugin for maven</description>
+	<organization>
+		<name>Kwatee</name>
+		<url>http://kwatee.net</url>
+	</organization>
+</project>

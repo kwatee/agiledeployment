@@ -1,0 +1,117 @@
+<ng-form name="form">
+	<div class="row" style="margin-bottom: 15px">
+		<div class="col-xs-12">
+			<div class="input-group">
+				<span class="input-group-addon">Description</span>
+				<input type="text" id="description" ng-model="environment.description" class="form-control"></input>
+				<span class="input-group-addon">
+					<label><input type="checkbox" ng-model="environment.disabled">disabled</label>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div id="artifactsPanel" class="panel panel-default">
+		<div class="panel-heading status">
+			<a id="env_artifacts" href="" class="h5" ng-click="$prefs.artifactsCollapsed = !$prefs.artifactsCollapsed">Artifacts</a>
+			<toolbar-button id="addArtifact" ng-click="addArtifact()" ng-disabled="readOnly" title="Add environment artifact"></toolbar-button> 
+		</div>
+		<div uib-collapse="$prefs.artifactsCollapsed">
+			<div class="panel-status"></div>
+			<table class="table table-striped table-condensed table-truncate" id="environmentArtifactsTable">
+				<colgroup>
+					<col width="1px" />
+					<col width="120px" />
+					<col width="99%" />
+					<col width="1px" />
+					<col width="1px" />
+				</colgroup>
+				<tr ng-repeat="artifact in environmentArtifacts = (environment.artifacts | filter:enabledEnvironmentArtifact())" ng-class="{disabled: artifactInfo(artifact).disabled}">
+					<td><div class="icon only artifactIcon"></div></td>
+					<td style="min-width: 120px;max-width: 200px">{{artifact}}</td>
+					<td style="max-width: 550px;"><div style="font-size: 75%; margin-top: 4px">{{artifactInfo(artifact).description}}</div></td>
+					<td>
+						<toolbar-button id="up" ng-click="moveArtifactUp(artifact)" ng-disabled="$first || readOnly"></toolbar-button>
+						<toolbar-button id="down" ng-click="moveArtifactDown(artifact)" ng-disabled="$last || readOnly"></toolbar-button>
+					</td>
+					<td>
+						<toolbar-button id="delete" ng-disabled="readOnly" ng-click="removeArtifact(artifact)"></toolbar-button>
+					</td>
+				</tr>
+			</table>
+			<div ng-if="!environmentArtifacts || !environmentArtifacts.length" class="emptyTable">None</div>
+		</div>
+	</div>
+
+	<div id="serversPanel" class="panel panel-default">
+		<div class="panel-heading status">
+			<a id="env_servers" href="" class="h5" ng-click="$prefs.serversCollapsed = !$prefs.serversCollapsed">Servers</a>
+			<toolbar-button id="addServer" ng-click="addServer()" ng-disabled="readOnly" title="Add environment server"></toolbar-button> 
+		</div>
+		<div uib-collapse="$prefs.serversCollapsed">
+			<div class="panel-status"></div>
+			<table class="table table-striped table-condensed table-truncate">
+				<colgroup>
+					<col width="1px">
+					<col width="120px">
+					<col width="99%">
+					<col width="1px">
+				</colgroup>
+				<thead><tr>
+					<th colspan="4">
+						<span class="checkbox" style="margin-top:0;margin-bottom:0">
+							<label>
+								<input type="checkbox" ng-model="environment.sequentialDeployment">
+								Deploy sequentially
+							</label>
+						</span>
+					</th>
+				</tr></thead>
+				<tr ng-repeat="server in environmentServers = (environment.servers | filter:enabledEnvironmentServer())" ng-class="{disabled: serverInfo(server).disabled}">
+					<td><div class="icon only serverIcon"></div></td>
+					<td style="min-width: 120px;max-width: 200px">{{server}}</td>
+					<td style="max-width: 550px;"><div style="font-size: 75%; margin-top: 4px">{{serverInfo(server).description}}</div></td>
+					<td>
+						<toolbar-button id="up" ng-click="moveServerUp(server)" ng-disabled="$first || readOnly"></toolbar-button>
+						<toolbar-button id="down" ng-click="moveServerDown(server)" ng-disabled="$last || readOnly"></toolbar-button>
+					</td>
+					<td>
+						<toolbar-button id="delete" ng-disabled="readOnly" ng-click="removeServer(server)"></toolbar-button>
+					</td>
+				</tr>
+			</table>
+			<div ng-if="!environmentServers || !environmentServers.length" class="emptyTable">None</div>
+		</div>
+	</div>
+
+	<div id="releasesPanel" class="panel panel-default">
+		<div class="panel-heading">
+			<span class="h5">Releases</span>
+		</div>
+		<div>
+			<table class="table table-striped table-condensed table-truncate">
+				<colgroup>
+					<col width="1px">
+					<col width="120px">
+					<col width="99%">
+					<col width="1px">
+				</colgroup>
+				<thead><tr></tr></thead>
+				<tr ng-repeat="release in environmentReleases = (environment.releases | filter:enabledObject())" ng-class="{disabled: release.disabled}">
+					<td><div class="icon only tagIcon"></div></td>
+					<td style="min-width: 120px;max-width: 200px"><a href="#/environments/{{environment.name}}/{{release.name}}">{{release.name}}</a></td>
+					<td style="max-width: 550px"><div style="font-size: 75%; margin-top: 4px">{{release.description}}</div></td>
+					<td>
+						<toolbar-button id="delete" ng-disabled="readOnly" ng-if="!release.editable" ng-click="deleteRelease(release.name)"></toolbar-button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+	<div class="row modal-footer">
+		<button type="reset" id="revert" class="btn" ng-click="revert()" ng-disabled="form.$pristine">Discard Changes</button>
+		<button type="submit" id="save" class="btn btn-primary" ng-click="save()" ng-disabled="form.$pristine">Save</button>
+	</div>
+</ng-form>

@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.kwatee.agiledeployment</groupId>
+		<artifactId>agiledeployment</artifactId>
+		<version>4.0.3-SNAPSHOT</version>
+	</parent>
+	<artifactId>kwatee-ganymed-ssh</artifactId>
+	<packaging>jar</packaging>
+
+	<name>SSH Client</name>
+	<description>Ganymed-SSH with small changes for Kwatee</description>
+	<organization>
+		<name>Kwatee</name>
+		<url>http://kwatee.net</url>
+	</organization>
+</project>

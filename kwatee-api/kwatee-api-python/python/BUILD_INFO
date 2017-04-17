@@ -1,0 +1,7 @@
+To generate and use the kwatee python egg, make sure easy_tools is installed by executing ez_setup.py
+
+to generate the API documentation, we user epydoc (http://epydoc.sourceforge.net)
+
+	./builddoc.sh
+
+the doc will be generated in kwatee-webapp-distrib/dist/addons/python/doc/

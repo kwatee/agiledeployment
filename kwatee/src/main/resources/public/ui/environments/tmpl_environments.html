@@ -1,0 +1,32 @@
+<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+<div class="row">
+	<div class="col-xs-12">
+		<table class="table table-striped table-condensed table-truncate">
+			<colgroup>
+				<col width="1px">
+				<col width="120px">
+				<col width="99%">
+				<col width="1px">
+				<col width="1px">
+			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="4"></th>
+					<th><toolbar-button id="new" ng-click="newEnvironment()" ng-disabled="readOnly"></toolbar-button></th>
+				</tr>
+			</thead>
+			<tr ng-repeat="environment in filteredEnvironments = (environments | filter:enabledObject())" ng-class="{disabled: environment.disabled}">
+				<td><div class="icon only environmentIcon"></div></td>
+				<td style="min-width: 120px;max-width: 200px"><a href="#/environments/{{environment.name}}">{{environment.name}}</a></td>
+				<td style="max-width: 550px;"><div style="font-size: 75%; margin-top: 4px">{{environment.description}}</div></td>
+				<td>
+					<toolbar-button id="duplicate" ng-disabled="readOnly" ng-click="duplicateEnvironment(environment.name)"></toolbar-button>
+				</td>
+				<td>
+					<toolbar-button id="delete" ng-disabled="readOnly" ng-click="deleteEnvironment(environment.name)"></toolbar-button>
+				</td>
+			</tr>
+		</table>
+		<div ng-if="!filteredEnvironments.length" class="emptyTable">None</div>
+	</div>
+</div>

@@ -1,0 +1,29 @@
+<form name="form">
+	<div class="panel panel-default" style="margin-top:30px">
+		<div class="panel-heading">Create database</div>
+		<div class="panel-body">
+			Welcome to Kwatee. You were directed to this page because no kwatee database was detected at: <em>{{database}}</em>.
+			<alert class="alert-warning" style="margin-top:15px">If you had already created the database schema you may want to check that your database server is up and running. In case of doubt, do not proceed as this operation will erase all existing configuration, including repository packages</alert>
+			<p>BY INSTALLING AND USING THIS SOFTWARE YOU AGREE TO BE BOUND BY THE <a href="LICENSE.html" target="_blank">Kwatee BCL Agreement</a>.</p>
+
+			<p>Please provide the password of your database user for verification</p>
+			<div class="row" style="margin-top:15px">
+				<div class="col-sm-3">
+					<label>Database login
+					<input type="text" class="form-control" ng-model="dba_user" readOnly></input>
+					</label>
+				</div>
+				<div class="col-sm-4">
+					<label>Password
+					<input type="password" id="pwd" class="form-control" ng-model="dba_password" required auto-focus></input>
+					</label>
+				</div>
+				<div class="col-sm-1">
+					<label></label>
+					<button type="submit" id="create" class="btn btn-primary" ng-click="createDB(dba_password)">Create</button>
+				</div>
+			</div>
+			<alert type="danger" ng-if="error" close="error=null">{{error}}</alert>
+		</div>
+	</div>
+</form>

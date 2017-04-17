@@ -1,0 +1,187 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.kwatee.agiledeployment</groupId>
+		<artifactId>agiledeployment</artifactId>
+		<version>4.0.3-SNAPSHOT</version>
+	</parent>
+	<artifactId>kwatee-api</artifactId>
+	<version>4.0</version>
+	<packaging>pom</packaging>
+	<repositories>
+		<repository>
+			<id>repository.springsource.milestone</id>
+			<name>SpringSource Milestone Repository</name>
+			<url>http://repo.springsource.org/milestone</url>
+		</repository>
+	</repositories>
+	<modules>
+		<module>kwatee-api-python</module>
+		<module>kwatee-api-java</module>
+		<module>kwatee-maven-plugin</module>
+	</modules>
+	<properties>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<!-- Testing -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.11</version>
+				<!-- scope>test</scope -->
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>1.9.5</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<show>public</show>
+					<notimestamp>true</notimestamp>
+					<links>
+						<link>http://junit.sourceforge.net/javadoc/</link>
+						<link>http://logging.apache.org/log4j/1.2/apidocs/</link>
+						<link>http://velocity.apache.org/engine/releases/velocity-1.5/apidocs/</link>
+					</links>
+					<detectLinks>false</detectLinks>
+					<tagletArtifacts>
+						<tagletArtifact>
+							<groupId>org.apache.maven.plugin-tools</groupId>
+							<artifactId>maven-plugin-tools-javadoc</artifactId>
+							<version>3.2</version>
+						</tagletArtifact>
+						<tagletArtifact>
+							<groupId>org.codehaus.plexus</groupId>
+							<artifactId>plexus-javadoc</artifactId>
+							<version>1.0</version>
+						</tagletArtifact>
+					</tagletArtifacts>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+	<build>
+		<!-- ==================================================== -->
+		<!-- ==== Common plugins ================================ -->
+		<!-- ==================================================== -->
+		<!-- These plugin definitions are only inherited by -->
+		<!-- children when added to <plugins>...</plugins> -->
+		<pluginManagement>
+			<plugins>
+				<!-- Maven assembly plugin -->
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.5.2</version>
+				</plugin>
+				<!-- Maven WAR packaging plugin -->
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.3</version>
+				</plugin>
+				<!-- Maven unit testing plugin -->
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.15</version>
+				</plugin>
+				<!-- Maven cleanup plugin -->
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<!-- Maven release plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.4.1</version>
+				</plugin>
+				<!-- Maven resources plugin -->
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<!-- Maven compiler plugin basic configuration -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<encoding>UTF-8</encoding>
+					<compilerArgument>-proc:none</compilerArgument>
+				</configuration>
+			</plugin>
+			<!-- Deploy sources and javadoc -->
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<notimestamp>true</notimestamp>
+							<links>
+								<link>http://commons.apache.org/collections/apidocs-COLLECTIONS_3_0/</link>
+								<link>http://junit.sourceforge.net/javadoc/</link>
+								<link>http://logging.apache.org/log4j/1.2/apidocs/</link>
+								<link>http://velocity.apache.org/engine/releases/velocity-1.5/apidocs/</link>
+							</links>
+							<detectLinks>true</detectLinks>
+							<tagletArtifacts>
+								<tagletArtifact>
+									<groupId>org.apache.maven.plugin-tools</groupId>
+									<artifactId>maven-plugin-tools-javadoc</artifactId>
+									<version>3.2</version>
+								</tagletArtifact>
+								<tagletArtifact>
+									<groupId>org.codehaus.plexus</groupId>
+									<artifactId>plexus-javadoc</artifactId>
+									<version>1.0</version>
+								</tagletArtifact>
+							</tagletArtifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<organization>
+		<name>Kwatee</name>
+		<url>http://kwatee.net</url>
+	</organization>
+</project>

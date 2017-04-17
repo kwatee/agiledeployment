@@ -1,0 +1,25 @@
+<ng-form name="form">
+	<div class="row" style="margin-bottom:15px">
+		<div class="col-sm-12">
+			<label>Title
+				<input type="text" id="description" ng-model="parameters.title" class="form-control"></input>
+			</label>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Extensions excluded from variable scanning <small><em>(changes impacts only new uploads)</em></small>
+			<button type="button" id="new" ng-click="addExtension()" class="btn btn-info btn-xs pull-right">Add Extension</button>
+		</div>
+		<div class="panel-body">
+			<div ng-repeat="excluded in parameters.excludedExtensions" class="Tag" ng-click="removeExtension($event, excluded)">{{excluded}}</div>
+		</div>
+	</div>
+
+	<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+	<div class="row modal-footer">
+		<button type="reset" id="revert" class="btn" ng-click="revert()" ng-disabled="form.$pristine">Discard Changes</button>
+		<button type="button" id="save" class="btn btn-primary" ng-click="save()" ng-disabled="form.$pristine">Save</button>
+	</div>
+</ng-form>

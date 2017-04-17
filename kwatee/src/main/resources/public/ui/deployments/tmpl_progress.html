@@ -1,0 +1,39 @@
+<div class="row" style="margin-bottom: 15px">
+	<div class="col-xs-12 h3">
+		<span><b>{{progress.operation}}</b> <i>{{progress.status}}</i>
+		<img src="ui/img/processing.gif" ng-if="refresh.action" style="position:absolute;top:-7px;margin-left:15px">
+		</span>
+		<button id="abort" type="button" ng-hide="'inexistant,done,interrupted'.contains(progress.status)" type="button" class="btn btn-default btn-danger" ng-click="cancelOperation()" ng-disabled="canceling" style="position:absolute;right:15px">Cancel</button>
+		<button id="done" type="button" ng-show="'inexistant,done,interrupted'.contains(progress.status)" type="button" class="btn btn-default btn-info" ng-click="clearOperation()" style="position:absolute;right:15px">Done</button>
+	</div>
+</div>
+<alert id="opSuccess" ng-if="success" class="alert-success">The operation was successful</alert>
+<alert id="opFailed" ng-if="failure" class="alert-danger">The operation did not succeed</alert>
+<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+<div class="panel panel-default">
+	<div class="panel-heading h5">Detailed status</div>
+	<div>
+		<accordion class="progress">
+			<accordion-group ng-repeat="server in progress.servers">
+				<accordion-heading>
+					<a>{{server.server}}</a>
+					<div class="actions">
+						<a href="" ng-click="showStatus(server.server)" class="{{server.status}}">{{server.status}}</a>
+					</div>
+				</accordion-heading>		
+				<table class="table table-striped table-condensed table-truncate">
+					<colgroup>
+						<col width="1px">
+						<col width="120px">
+						<col width="99%">
+					</colgroup>
+					<tr ng-repeat="artifact in server.artifacts">
+						<td><div class="icon only artifactIcon"></div></td>
+						<td style="min-width: 120px; max-width: 200px">{{artifact.artifact}}</td>
+						<td style="text-align:right"><a href="" ng-click="showStatus(server.server, artifact.artifact)" class="{{artifact.status}}">{{artifact.status}}</a></td>
+					</tr>
+				</table>
+			</accordion-group>
+		</accordion>
+	</div>
+</div>

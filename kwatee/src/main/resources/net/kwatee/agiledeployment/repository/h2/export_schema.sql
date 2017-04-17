@@ -1,0 +1,4 @@
+CREATE TABLE repository (
+	path VARCHAR(2000) NOT NULL,
+	data BLOB NOT NULL
+);

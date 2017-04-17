@@ -1,0 +1,33 @@
+<form name="permForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">OS Permissions for {{name}}</h3>
+	</div>
+
+	<div class="modal-body">
+		<div class="form-group">
+			<label>Owner
+				<input type="text" id="fileOwner" ng-model="permissions.fileOwner" ng-disabled="readOnly" class="form-control" placeholder="{{originalPermissions.fileOwner}}"></input>
+			</label>
+		</div>
+		<div class="form-group">
+			<label>Group
+				<input type="text" id="fileGroup" ng-model="permissions.fileGroup" ng-disabled="readOnly" class="form-control" placeholder="{{originalPermissions.fileGroup}}"></input>
+			</label>
+		</div>
+		<div class="form-group" ng-class="{'has-error' : permForm.fileMode.$invalid}">
+			<label>File mode
+				<input type="text" id="fileMode" name="fileMode" ng-model="permissions.fileMode" ng-disabled="readOnly" class="form-control" ng-pattern="/^[0-7]*$/" placeholder="{{originalPermissions.fileMode}}"></input>
+			</label>
+		</div>
+		<div class="form-group" ng-hide="!dir" ng-class="{'has-error' : permForm.dirMode.$invalid}">
+			<label>Dir mode
+				<input type="text" id="dirMode" name="dirMode" ng-model="permissions.dirMode" ng-disabled="readOnly" class="form-control" ng-pattern="/^[0-7]*$/"  placeholder="{{originalPermissions.fileMode}}"></input>
+			</label>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" id="cancel" class="btn btn-default" ng-click="$dismiss()">Cancel</button>
+		<button type="submit" id="ok" class="btn btn-primary" ng-disabled="readOnly || permForm.$invalid" ng-click="$close(permissions)">OK</button>
+	</div>
+</form>

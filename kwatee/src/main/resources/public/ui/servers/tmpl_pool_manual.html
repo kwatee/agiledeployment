@@ -1,0 +1,49 @@
+<ng-form name="innerForm" novalidate>
+<div>
+	<table class="table table-striped table-condensed table-truncate">
+		<colgroup>
+			<col width="1px">
+			<col width="160px">
+			<col width="250px">
+			<col width="70px">
+			<col width="">
+			<col width="1px">
+		</colgroup>
+		<thead>
+			<tr>
+				<th></th>
+				<th>label</th>
+				<th>ip address</th>
+				<th>port</th>
+				<th></th>
+				<th>
+					<toolbar-button id="new" ng-disabled="readOnly" ng-click="newInstance()"></toolbar-button>
+				</th>
+			</tr>
+		</thead>
+		<tr ng-repeat="instance in instances">
+			<td><div class="icon serverIcon only" style="margin-top:4px"></div></td>
+			<td style="min-width: 160px" ng-class="{'has-error' : innerForm['name'+$index].$invalid}">
+				<input type="text" class="form-control input-sm"
+				ng-pattern="/^[0-9A-Z_\\.\\-]*$/i" dynamic-name="'name'+$index"
+				ng-model="instance.name" ng-model-options="{ updateOn: 'blur'}">
+			</td>
+			<td style="min-width: 250px" ng-class="{'has-error' : innerForm['ip'+$index].$invalid}">
+				<input type="text" class="form-control input-sm"
+				required ng-pattern="/^[0-9A-Z_\\.\\-]*$/i" dynamic-name="'ip'+$index"
+				ng-model="instance.ip_address" ng-model-options="{ updateOn: 'blur'}">
+			</td>
+			<td style="min-width: 70px" ng-class="{'has-error' : innerForm['port'+$index].$invalid}">
+				<input type="text" class="form-control input-sm" maxLength="5"
+				required ng-pattern="/^[0-9]*$/i" dynamic-name="'port'+$index"
+				ng-model="instance.port" ng-model-options="{ updateOn: 'blur'}">
+			</td>
+			<td></td>
+			<td>
+				<toolbar-button id="delete" ng-disabled="readOnly" ng-click="removeInstance(instance)"></toolbar-button>
+			</td>
+		</tr>
+	</table>
+	<alert ng-if="!instances || !instances.length" type="warning">No instances defined</alert>
+</div>
+</ng-form>

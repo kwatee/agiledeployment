@@ -1,0 +1,17 @@
+<environment>
+	<variables>
+		<variable name="var3">var3='%{var2} %{var1}'</variable>
+	</variables>
+	<artifacts>
+		<artifact name="artifact1">
+			<variables>
+				<variable name="var2">var2='%{var1}'</variable>
+				<variable name="var1">var1=hello</variable>
+			</variables>
+		</artifact>
+		<artifact name="artifactn">
+			<variables>
+			</variables>
+		</artifact>
+	</artifacts>
+</environment>

@@ -1,0 +1,32 @@
+<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+<div class="row">
+	<div class="col-xs-12">
+		<table class="table table-striped table-condensed table-truncate">
+			<colgroup>
+				<col width="1px">
+				<col width="120px">
+				<col width="99%">
+				<col width="1px">
+			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="3"></th>
+					<th style="min-width:64px">
+						<toolbar-button id="newServerPool" ng-click="newServerPool()" ng-disabled="readOnly"></toolbar-button>
+						<toolbar-button id="newServer" ng-click="newServer()" ng-disabled="readOnly"></toolbar-button>
+					</th>
+				</tr>
+			</thead>
+			<tr ng-repeat="server in filteredServers = (servers | filter:enabledObject())" ng-class="{disabled: server.disabled}">
+				<td><div class="icon only" ng-class="{serverIcon: !server.poolType, serverPoolIcon: server.poolType}"></div></td>
+				<td style="min-width: 120px;max-width: 200px"><a href="#/servers/{{server.name}}">{{server.name}}</a></td>
+				<td style="max-width: 550px"><div style="font-size: 75%; margin-top: 4px">{{server.description}}</div></td>
+				<td>
+					<toolbar-button id="duplicate" ng-disabled="readOnly" ng-click="duplicateServer(server.name)"></toolbar-button>
+					<toolbar-button id="delete" ng-disabled="readOnly" ng-click="deleteServer(server.name)"></toolbar-button>
+				</td>
+			</tr>
+		</table>
+		<div ng-if="!filteredServers.length" class="emptyTable">None</div>
+	</div>
+</div>

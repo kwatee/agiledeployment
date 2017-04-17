@@ -1,0 +1,15 @@
+<form name="modalForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">Server diagnostics</h3>
+	</div>
+	<div class="modal-body">
+		{{title}}
+		<ul>
+		<li ng-repeat="cap in capabilities">{{cap}}</li>
+		</ul>
+	</div>
+
+	<div class="modal-footer">
+		<button id="ok" type="submit" class="btn" ng-click="$dismiss()">Done</button>
+	</div>
+</form>

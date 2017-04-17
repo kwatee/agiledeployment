@@ -1,0 +1,4 @@
+To install the kwatee-maven-plugin in you local repository run the following command:
+  mvn install:install-file -Dfile=kwatee-maven-plugin-${project.version}.jar -DpomFile=pom.xml
+
+Detailed documentation can be found at http://www.kwatee.net/doc or in the docs directory

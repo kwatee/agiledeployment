@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<span class="h5">Package Contents</span>
+		<div class="pull-right">
+			<toolbar-button id="specialFiles" ng-click="specialFiles()" title="Show Special Files"></toolbar-button>
+			<toolbar-button id="overlay" ng-click="overlays($event.shiftKey)" ng-disabled="readOnly || packageRescanIsNeeded" title="Add Overlay"></toolbar-button>
+			<toolbar-button id="variables" ng-click="editVariablePrefixChar()" ng-disabled="readOnly || packageRescanIsNeeded" title="Change variable prefix character"></toolbar-button>
+			<toolbar-button id="permissions" ng-click="editPermissions()" title="Default permissions and ownership"></toolbar-button>
+			<toolbar-button id="refresh" ng-click="rescanPackage()" ng-hide="readOnly || !packageRescanIsNeeded"  title="Rescans package files"></toolbar-button>
+		</div>
+	</div>
+	<alert ng-if="packageRescanIsNeeded" class="alert-warning">Package rescan is needed</alert>
+	<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+	<kw-tree ng-model="files" load-fn="loadChildren" selection="selection"></kw-tree>
+</div>

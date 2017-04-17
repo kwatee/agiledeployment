@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<span class="h5"><span ng-if="!serverName">Default</span><span ng-if="serverName"><i>{{serverName}}</i></span> Overlays for artifact <i>{{artifactName}}</i></span>
+		<toolbar-button id="overlay" ng-disabled="readOnly" class="pull-right" ng-click="overlays($event.shiftKey)" title="Add Overlay"></toolbar-button>
+	</div>
+	<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+	<kw-tree ng-model="files" load-fn="loadChildren" selection="selection"></kw-tree>
+	<div class="row modal-footer">
+		<button type=Done id="done" class="btn btn-primary" ng-click="done()">Done</button>
+	</div>
+</div>

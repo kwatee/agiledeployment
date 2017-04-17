@@ -1,0 +1,16 @@
+<form name="askForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">{{ask.title}}</h3>
+	</div>
+	<div class="modal-body" ng-init="newValue=ask.value">
+		<div class="form-group">
+			<label for="askValue" class="control-label">{{ask.what}}
+				<textarea id= "askValue" name="askValue" ng-model="newValue" class="form-control" rows="15" auto-focus></textarea>
+			</label>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button id="cancel" type="button" class="btn" ng-click="$dismiss()">Cancel</button>
+		<button id="ok" type="submit" class="btn btn-primary" ng-disabled="askForm.$invalid" ng-click="$close(newValue)">OK</button>
+	</div>
+</form>

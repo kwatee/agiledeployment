@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.kwatee.agiledeployment</groupId>
+		<artifactId>agiledeployment</artifactId>
+		<version>4.0.3-SNAPSHOT</version>
+	</parent>
+	<artifactId>kwatee-integration-test</artifactId>
+	<name>Kwatee Integration Tests</name>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.48.2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.kwatee.agiledeployment</groupId>
+			<artifactId>kwatee-api-java</artifactId>
+			<version>${kwatee_api_version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+	</dependencies>
+	<organization>
+		<name>Kwatee</name>
+		<url>http://kwatee.net</url>
+	</organization>
+</project>

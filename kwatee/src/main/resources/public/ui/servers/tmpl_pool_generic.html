@@ -1,0 +1,31 @@
+<ng-form name="innerForm">
+	<div class="form-group" ng-repeat="descriptor in descriptors" ng-switch="descriptor.type">
+		<div ng-switch-when="0" ng-class="{'has-error' : innerForm['prop'+$index].$invalid}">
+			<label for="prop{{$index}}" class="col-sm-2 control-label">{{descriptor.label}}</label>
+			<div class="col-sm-9">
+				<input type="text" id="prop{{$index}}" dynamic-name="'prop'+$index" ng-model="properties[descriptor.name]" class="form-control" required></input>
+			</div>
+		</div>
+		<div ng-switch-when="1" ng-class="{'has-error' : innerForm['prop'+$index].$invalid}">
+			<label for="prop{{$index}}" class="col-sm-2 control-label">{{descriptor.label}}</label>
+			<div class="col-sm-2">
+				<input type="number" id="prop{{$index}}" dynamic-name="'prop'+$index" ng-model="properties[descriptor.name]" class="form-control" required ng-pattern="/\d+/" ng-class="{'has-error' : genericForm.askValue.$invalid}"></input>
+			</div>
+		</div>
+		<div ng-switch-when="2" class="col-sm-offset-2 col-sm-10">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" id="prop{{$index}}" ng-model="properties[descriptor.name]"></input>
+					{{descriptor.label}}
+				</label>
+			</div>
+		</div>
+		<div ng-switch-when="3">
+			<label for="prop{{$index}}" class="col-sm-2 control-label">{{descriptor.label}}</label>
+			<div class="col-sm-4">
+				<select id="prop{{$index}}" ng-options="option.id as option.name for option in descriptor.options" ng-model="properties[descriptor.name]" class="form-control"></select>
+			</div>
+		</div>
+	</div>
+	<alert ng-if="!descriptors.length" type="info">No custom properties</alert>
+</ng-form>

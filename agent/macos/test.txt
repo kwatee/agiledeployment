@@ -1,0 +1,4 @@
+line 1: this is a test
+line 2: contains var1 '%{var1}' and more
+line 3: contains var2 '%{var2=hello}'
+%{var3}

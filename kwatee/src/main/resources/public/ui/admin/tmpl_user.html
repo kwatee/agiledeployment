@@ -1,0 +1,45 @@
+<ng-form name="form" novalidate>
+	<div class="row" style="margin-bottom: 15px">
+		<div class="col-xs-12">
+			<div class="input-group">
+				<span class="input-group-addon">Description</span>
+				<input type="text" id="description" ng-model="user.description" class="form-control"></input>
+				<span class="input-group-addon">
+					<label><input type="checkbox" ng-model="user.disabled">disabled</label>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-bottom: 15px">
+		<div class="col-sm-12">
+			<label>Email
+				<input type="text" id="email" ng-model="user.email" class="form-control"></input>
+			</label>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<span class="h5">Change password</span>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-sm-4">
+					<label>New password
+						<input type="password" id="pwd1" ng-model="user.password" class="form-control"></input>
+					</label>
+				</div>
+				<div class="col-sm-4">
+					<label>Verify password
+						<input type="password" id="pwd2" ng-model="verifyPassword" class="form-control"></input>
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+	<div class="row modal-footer">
+		<button type="reset" id="revert" class="btn" ng-click="revert()" ng-disabled="form.$pristine">Discard Changes</button>
+		<button type="submit" id="save" class="btn btn-primary" ng-click="save()" ng-disabled="form.$pristine">Save</button>
+	</div>
+</ng-form>

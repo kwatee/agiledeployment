@@ -1,0 +1,31 @@
+<form name="authForm" novalidate>
+	<div class="modal-header">
+		<h3 class="modal-title">Server authentication</h3>
+	</div>
+	<div class="modal-body">
+		<p>Authentication is required for server <em>{{authRequest.server}}</em> on artifact <em>{{authRequest.artifact}}</em>.</p>
+		<div class="form-group" ng-class="{'has-error' : authForm.login.$invalid}" ng-init="hasLogin=authRequest.login">
+			<label>Login
+			<input type="text" id="login" name="login" ng-model="authRequest.login" class="form-control" ng-readonly="hasLogin" required></input>
+			</label>
+		</div>
+		<div class="form-group" ng-class="{'has-error' : authForm.password.$invalid}">
+			<label>Password
+			<input type="password" id="password" name="password" ng-model="authRequest.password" class="form-control" required auto-focus></input>
+			</label>
+		</div>
+		<alert type="warning" ng-if="authRequest.message">{{authRequest.message}}</alert>
+
+		<div class='form-group'>
+			<label></label>
+			<span class="checkbox">
+				<label><input type="checkbox" ng-model="sameForAllServers">
+				Same password for all servers in <em>{{authRequest.environment}}</em></label>
+			</span>
+		</div>
+	</div>
+	<div class="modal-footer">
+    	<button id="cancel" type="button" class="btn" ng-click="$dismiss()">Abort deployment operation</button>
+    	<button id="ok" type="submit" class="btn btn-primary" ng-click="doAuth()" ng-disabled="authForm.$invalid">Authenticate</button>
+	</div>
+</form>

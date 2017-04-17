@@ -1,0 +1,39 @@
+<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+<div class="row">
+	<alert ng-if="release.hasErrors" class="alert-danger">This release has errors, it cannot be deployed</alert>
+	<div class="col-xs-12">
+		<table class="table table-striped table-condensed table-truncate">
+			<colgroup>
+				<col width="1px">
+				<col width="99%">
+				<col width="1px">
+			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="2" align="right">
+						<div class="btn-group" role="group" aria-label="Deploy group">
+							<button id="deploy" type="button" class="btn btn-primary btn-xs" ng-disabled="!anySelected || release.hasErrors" ng-click="manageDeploy($event.shiftKey)">Deploy</button>
+							<button id="undeploy" type="button" class="btn btn-primary btn-xs" ng-disabled="!anySelected || release.hasErrors" ng-click="manageUndeploy($event.shiftKey)">Undeploy</button>
+							<button id="check" type="button" class="btn btn-primary btn-xs" ng-disabled="!anySelected || release.hasErrors" ng-click="manageCheck()">Check Integrity</button>
+						</div>
+						<div class="btn-group" role="group" aria-label="Deploy group">
+							<button id="start" type="button" class="btn btn-default btn-xs" ng-disabled="!anySelected || release.hasErrors" ng-click="manageStart($event.shiftKey)">Start</button>
+							<button id="stop" type="button" class="btn btn-default btn-xs" ng-disabled="!anySelected || release.hasErrors" ng-click="manageStop($event.shiftKey)">Stop</button>
+							<button id="status" type="button" class="btn btn-default btn-xs" ng-disabled="!anySelected || release.hasErrors" ng-click="manageStatus($event.shiftKey)">Status</button>
+						</div>
+					</th>
+					<th>
+						<input type="checkbox" ng-model="selectAll" ng-change="updateSelected(selectAll)">
+					</th>
+				</tr>
+			</thead>
+			<tr ng-repeat="serverArtifact in serverArtifacts = (release.servers | filter:usedServer())" ng-class="{disabled: serverArtifact.disabled}">
+				<td><div class="icon only serverIcon"></div></td>
+				<td style="min-width: 120px;max-width: 200px">{{serverArtifact.server}}</td>
+				<td>
+					<input type="checkbox" ng-if="!serverArtifact.disabled" ng-model="serverArtifact.selected" ng-change="updateSelected()">
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,39 @@
+2016-05-23 23:35:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-05-23 23:35:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-05-23 23:35:12 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-05-23 23:35:12 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-10-02 12:56:18 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-10-02 12:56:18 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-10-02 12:56:18 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-10-02 12:56:19 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-10-02 12:56:19 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-10-02 12:56:28 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-10-02 12:56:28 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-10-02 12:56:31 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]
+2016-10-02 12:56:31 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "KWSYSTEMPROPERTY" not found; SQL statement:
+select value from KWSystemProperty where name='kwatee_schema_version' [42102-188]

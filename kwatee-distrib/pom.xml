@@ -1,0 +1,180 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.kwatee.agiledeployment</groupId>
+		<artifactId>agiledeployment</artifactId>
+		<version>4.0.3-SNAPSHOT</version>
+	</parent>
+	<artifactId>kwatee-distrib</artifactId>
+	<packaging>pom</packaging>
+	<name>Kwate distribution</name>
+
+	<!-- NOTE: These dependency declarations are only required to sort this 
+		project to the end of the line in the multimodule build. Since we only include 
+		the child1 module in our assembly, we only need to ensure this distribution 
+		project builds AFTER that one... -->
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>kwatee</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>kwatee-api-java</artifactId>
+			<version>${kwatee_api_version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>kwatee-maven-plugin</artifactId>
+			<version>${kwatee_api_version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.groovy.maven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<source>
+								import java.util.Date
+								import java.text.MessageFormat
+								def d = Calendar.getInstance()
+								project.properties['date_year'] = Integer.toString(d.get(Calendar.YEAR))
+								project.properties['date_month'] = Integer.toString(d.get(Calendar.MONTH)+1)
+								project.properties['date_day'] = Integer.toString(d.get(Calendar.DAY_OF_MONTH))
+							</source>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<!-- Copy to distro -->
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-distro-filtered</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/distro</outputDirectory>
+							<nonFilteredFileExtensions>
+								<nonFilteredFileExtension>jpeg</nonFilteredFileExtension>
+								<nonFilteredFileExtension>jpg</nonFilteredFileExtension>
+								<nonFilteredFileExtension>gif</nonFilteredFileExtension>
+								<nonFilteredFileExtension>png</nonFilteredFileExtension>
+								<nonFilteredFileExtension>jar</nonFilteredFileExtension>
+								<nonFilteredFileExtension>war</nonFilteredFileExtension>
+								<nonFilteredFileExtension>zip</nonFilteredFileExtension>
+								<nonFilteredFileExtension>gz</nonFilteredFileExtension>
+								<nonFilteredFileExtension>egg</nonFilteredFileExtension>
+								<nonFilteredFileExtension>css</nonFilteredFileExtension>
+								<nonFilteredFileExtension>js</nonFilteredFileExtension>
+								<nonFilteredFileExtension>eot</nonFilteredFileExtension>
+								<nonFilteredFileExtension>svg</nonFilteredFileExtension>
+								<nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+								<nonFilteredFileExtension>woff</nonFilteredFileExtension>
+								<nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+								<nonFilteredFileExtension>db</nonFilteredFileExtension>
+								<nonFilteredFileExtension>h2</nonFilteredFileExtension>
+							</nonFilteredFileExtensions>
+							<resources>
+								<resource>
+									<directory>src/main/distrib</directory>
+									<excludes>
+										<exclude>repository</exclude>
+									</excludes>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-distro-unfiltered</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/distro</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/distrib</directory>
+									<includes>
+										<include>repository/**</include>
+									</includes>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-python-distro</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/distro</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/../kwatee-api/kwatee-api-python/target/distro</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-java-distro</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/distro</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../kwatee-api/kwatee-api-java/target/distro</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>distro-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<tarLongFileMode>gnu</tarLongFileMode>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/main/assembly/distrib.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Copy docs to distro -->
+		</plugins>
+	</build>
+	<organization>
+		<name>Kwatee</name>
+		<url>http://kwatee.net</url>
+	</organization>
+</project>

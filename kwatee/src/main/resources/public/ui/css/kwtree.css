@@ -1,0 +1,31 @@
+/* tree */
+.kwTree {
+    list-style-type: none;
+    margin-left: -22px;
+    font-size: 13px;
+}
+
+.kwTree li div.icon {
+    display: inline-block;
+    width: 20px;
+    cursor: pointer;
+    vertical-align: text-bottom;
+}
+
+.kwTree span.nodeLabel {
+    cursor: pointer;
+}
+
+.kwTree span.nodeLabel.selected {
+    border: 1px solid #aaa;
+    background-color: #ddd;
+    padding: 1px 1px 3px 2px;
+    margin-left: -3px;
+}
+
+.kwTree img {
+	 width: 16px;
+	 height: 16px;
+	 margin-top:-3px;
+	 margin-left: 4px;
+}

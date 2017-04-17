@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>Revision History for Kwatee</title>
+  <style type="text/css">
+    h2 {margin: 0 0 0 0; font-size: 18px; font-weight:bold; border-bottom-style: solid; border-bottom-width: 1px; width: 100%;}
+    .s1 {font-size: 14px;}
+    ul {list-style-type: square;}
+  </style>
+</head>
+<body>
+<h2>Kwatee 4.0.3-SNAPSHOT<span class="s1"> - not released yet</span></h2>
+<ul>
+	<li>Enhancement: Support for plugin-enhancements</li>
+	<li>Minor cosmetic fixes</li>
+</ul>
+<h2>Kwatee 4.0.2<span class="s1"> - released June 14, 2016</span></h2>
+<ul>
+	<li>Enhancement: Support for plugin-enhancements</li>
+	<li>Minor cosmetic fixes</li>
+</ul>
+<h2>Kwatee 4.0.1<span class="s1"> - released April 11, 2016</span></h2>
+<ul>
+	<li>New: kwatee is now a standalone application that no longer requires tomcat</li>
+	<li>New: added owner:group and mode options on files and directories</li>
+	<li>New: Release variables - export variables</li>
+	<li>New: Release variables - import variables</li>
+	<li>New: Artifact variables - export variables</li>
+	<li>New: Artifact variables - import variables</li>
+	<li>Deployment - skip integrity checks when starting deploy operation with SHIFT key held down</li>
+	<li>Enhancement: Artifact variables - filter by reference</li>
+	<li>Enhancement: Release variables - default-version variables show in separate group</li>
+	<li>Enhancement: Deployment - different users can perform deploy operations simultaneously but only one concurrent operation per user</li>
+	<li>Enhancement: Deployment - deploy only checked servers</li>
+	<li>Enhancement: ask for confirmation when deploying entire environment if it contains 3 or more servers</li>
+	<li>Enhancement: Release Variables - improve missing variable presentation</li>
+	<li>Enhancement: Artifact variables - show references in popup when hovering over variable</li>
+	<li>Enhancement: CTRL-S (or CMD-S) triggers Save on all screens containing a Save button</li>
+	<li>Enhancement: Release editor - different icon to distinguish artifacts containing release-overlays (works only after release is saved)</li>
+	<li>Bug fix: properly cleanup version-defined variables from environment after removing artifact</li>
+</ul>
+<h2>Kwatee 3.0.0<span class="s1"> - released June 14, 2015</span></h2>
+<ul>
+	<li>Enhancement: new and more responsive user interface</li>
+	<li>Enhancement: great improvement on UI performance for larger archives (10x-15x faster)</li>
+	<li>Enhancement: command line deployment configuration is independent from artifact packages</li>
+	<li>Enhancement: command line deployment xml configuration can be managed outside kwatee</li>
+	<li>Enhancement: kwatee-maven-plugin download_installer goal (see doc)</li>
+	<li>Enhancement: possible to provide ssh key by path</li>
+	<li>Bug fix: special characters (!~* etc.) supported for custom variable prefix</li>
+	<li>Bug fix: inline default empty value, e.g. %{var=} (empty value) which is not same as %{var} (&lt;undefined&gt;), are now supported</li>
+	<li>Bug fix: some tar archive uploads cause a "500 Internal Error" (Error detected parsing the header)</li>
+</ul>
+<h2>Kwatee 2.3.2<span class="s1"> - released December 10, 2014</span></h2>
+<ul>
+	<li>Bug fix: fixed error when creating server on postgresql DB</li>
+</ul>
+<h2>Kwatee 2.3.1<span class="s1"> - released December 4, 2014</span></h2>
+<ul>
+	<li>Bug fix: distinguish between empty variable and undefined variable</li>
+	<li>Bug fix: allow . (dot) in variable names</li>
+	<li>Bug fix: re-introduced "Reedit" function in experimental interface</li>
+	<li>Bug fix: fixed kwatee-maven-plugin pom.xml in addOns</li>
+	<li>Bug fix: added kwatee-api-java pom.xml in addOns</li>
+</ul>
+<h2>Kwatee 2.3.0<span class="s1"> - released December 3, 2014</span></h2>
+<p><b>IMPORTANT NOTE:</b> version 2.3.0 introduces database changes that are not backwards compatible. New agents do not recognize old installations. Artifacts must be re-deployed.</p>
+<ul>
+	<li>New: experimental user interface</li>
+	<li>New: JSON RESTful API</li>
+	<li>New: python api</li>
+	<li>New: java api</li>
+	<li>Enhancement: Re-introduced "Duplicate Environment" feature (only SNAPSHOT deployment is copied).</li>
+	<li>Enhancement: kwateee metadata files are no longer installed together with installed artifact; instead they are centrally located in kwatee_root_dir.</li>
+	<li>Enhancement: action can return exit codes to indicate success/failure instead of special kwatee markers.</li>
+	<li>Enhancement: kwatee variables can be declared in package files with a default value, e.g., ${myvar=some default value}</li>
+	<li>Enhancement: recompiled linux agents for wider libc compatibility</li>
+	<li>Removed: obsolete kwatee ant plugin (can use python commands instead)</li>
+	<li>Minor UI improvement with variable names length</li>
+	<li>Bug fix: ignore integrity check on overlay incorrectly saved as ignore variables in server overlays</li>
+	<li>Bug fix: removed incorrect error message after uploading overlays in Chrome</li>
+</ul>
+<h2>Kwatee 2.2.1<span class="s1"> - released July 14, 2014</span></h2>
+<ul>
+	<li>Fixed regression with linux_64 agent</li>
+	<li>EC2 regression fixes</li>
+</ul>
+<h2>Kwatee 2.2.0<span class="s1"> - released June 1, 2014</span></h2>
+This is a major refactoring which sets the stage for future enhancements and improved release quality.
+<p><b>IMPORTANT NOTE:</b> if you are already using kwatee 2.1.x, please make sure to backup your database.</p>
+before upgrading to 2.2.0. Also, there have been database changes within the 2.2.0 release candidates.
+If you have tested earlier 2.2.0-RCx versions, please perform a clean installation or upgrade from an
+earlier 2.1.x backup.
+<ul>
+  <li>Start/Stop/Status/Check operations on server or artifact always mapped to deploy</li>
+  <li>Upgrade from 2.1.18 hangs</li>
+  <li>New: H2 embedded db. This is now the default configuration defined in kwatee.properties</li>
+  <li>New: command-line deployer. Enables deployment to multiple servers within a datacenter with a command line application and a deployment archive.</li>
+  <li>New: ZooKeeper server pool add-on, courtesy of ... (separate download)</li>
+  <li>Enhancement: user interface improvements</li>
+  <li>Enhancement: encrypt server passwords and private keys</li>
+  <li>Enhancement: added REST operation to update snapshot variables</li>
+  <li>Enhancement: added REST operation to retrieve list of environments &amp; releases</li>
+  <li>Enhancement: added REST operation to retrieve list of artifacts &amp; versions</li>
+  <li>Enhancement: improved interface for 3rd party server pool implementations</li>
+  <li>Enhancement: server passwords are encrypted in db</li>
+  <li>Enhancement: support password-protected private keys, including password prompt</li>
+  <li>Enhancement: configurable file extensions black list for kwatee variable scanning</li>
+  <li>Enhancement: highlighting of kwatee variables when browsing archive files</li>
+  <li>Enhancement: kwatee variable pattern can be customized to scan variables within archive files/overlays. Default remains '%{varName}'</li>
+  <li>Enhancement: inline default values for kwatee variables (e.g. %{myvar=test})</li>
+  <li>Enhancement: improved compatibility with latest zip formats</li>
+  <li>Enhancement: native win64 platform support resolves issues with some powershell scripts when running in 32bit mode</li>
+  <li>Info: renamed the 'package' concept to 'artifact'</li>
+  <li>Info: renamed the 'deployment' concept to 'release'</li>
+  <li>Info: renamed the 'SKETCH' deployment to 'snapshot' release</li>
+  <li>Bug Fix: prompt for password on deploy</li>
+  <li>Bug Fix: delete overlays when uploading archive now works</li>
+</ul>
+<h2>Kwatee 2.1.18<span class="s1"> - released April 18, 2014</span></h2>
+<ul>
+  <li>Bug Fix: windows offline installer deployment actions are now correctly executed</li>
+  <li>Bug Fix: removed legacy limitation on deployable number of servers per release</li>
+  <li>Bug Fix: empty directories in archives are now supported</li>
+</ul>
+<h2>Kwatee 2.1.17<span class="s1"> - released March 10, 2014</span></h2>
+<ul>
+  <li>Bug Fix: "The agent for this platform is not installed" error with solaris_sparc servers</li>
+</ul>
+<h2>Kwatee 2.1.16<span class="s1"> - released December 9, 2013</span></h2>
+<ul>
+  <li>Bug Fix: newly created Amazon EC2 pool generates a 500 error</li>
+  <li>Bug Fix: issue with zip files containing a single entry which showed as empty</li>
+  <li>Bug Fix: system variable override not working properly</li>
+</ul>
+<h2>Kwatee 2.1.15<span class="s1"> - released November 25, 2013</span></h2>
+<ul>
+  <li>Bug Fix: error in mysql db upgrade script (apologies)</li>
+</ul>
+<h2>Kwatee 2.1.14<span class="s1"> - released November 24, 2013</span></h2>
+<ul>
+  <li>Enhancement: increased max variable name length from 40 to 200 and allow names to contain dots ('.')</li>
+  <li>Bug Fix: off-line deployment actions not executed. <b>NOTE:</b> must regenerate offline installers</li>
+  <li>Bug Fix: cannot upload overlay at root level of package</li>
+  <li>Bug Fix: pre-setup script not executed unless Post-setup script defined</li>
+  <li>Bug Fix: some kwatee variables had incorrect values after deployment freeze</li>
+</ul>
+<h2>Kwatee 2.1.13<span class="s1"> - released July 22, 2013</span></h2>
+<ul>
+  <li>Bug Fix: environment variable server/package qualifiers lost in import</li>
+  <li>Bug Fix: environment bundle import fails in "upload" mode</li>
+  <li>Enhancement: no longer perform automatic integrity checks before stop operation</li>
+</ul>
+<h2>Kwatee 2.1.12<span class="s1"> - released May 9, 2013</span></h2>
+<ul>
+  <li>Bug Fix: major issue with zip archives that could not be uploaded is resolved</li>
+  <li>Bug Fix: cosmetic issue with overlays showing at root of archives is resolved</li>
+  <li>Enhancement: kwateelib and therefore update.py can now update archives even when kwatee is not running on localhost. <b>IMPORTANT NOTE:</b> use latest kwateelib task in your deployment automation</li>
+</ul>
+<h2>Kwatee 2.1.11<span class="s1"> - released December 2, 2012</span></h2>
+<ul>
+  <li>Bug Fix: archive updating via ant failed when kwatee url was not on localhost.  <b>IMPORTANT NOTE:</b> use latest ant task in your build.xml</li>
+  <li>Bug Fix: archive updating via maven failed when kwatee url was not on localhost. <b>IMPORTANT NOTE:</b> install new maven plugin and refer to version 1.0.2 in your pom.xml file</li>
+  <li>Bug Fix: REST API for updating package archive now requires POST instead of PUT</li>
+</ul>
+<h2>Kwatee 2.1.10<span class="s1"> - released October 12, 2012</span></h2>
+<ul>
+  <li>Bug Fix: archive updating via maven task failed with "Bad Parameter" in some conditions</li>
+  <li>Bug Fix: login always fails after first login error with unknown user (servlet restart needed)</li>
+  <li>Enhancement: add support for selecting region in EC2 server pools</li>
+</ul>
+<h2>Kwatee 2.1.9<span class="s1"> - released September 7, 2012</span></h2>
+<ul>
+  <li>Bug Fix: added long file name support in kwagent</li>
+  <li>Bug Fix: proper result codes are returned in RESTful API in case of errors</li>
+</ul>
+<h2>Kwatee 2.1.8<span class="s1"> - released July 10, 2012</span></h2>
+<ul>
+  <li>Bug Fix: manual server instances port number was disregarded (always used port=0)</li>
+  <li>Bug Fix: added long file name support for tar archives</li>
+  <li>Enhancement: kwatee.war may now be used with Jetty server</li>
+</ul>
+<h2>Kwatee 2.1.7<span class="s1"> - released May 23, 2012</span></h2>
+<ul>
+  <li>Enhancement: clean up REST interface and related python/ant/maven support (see documentation)</li>
+  <li>New: add REST/python/ant/maven support for create/delete version and freeze/delete deployment (see documentation)</li>
+  <li>Enhancement: "Internal Error" messages are now replaced by more explicit descriptions</li>
+</ul>
+<h2>Kwatee 2.1.6<span class="s1"> - released May 9, 2012</span></h2>
+<ul>
+  <li>Major Fix: files above a certain size incorrectly generated check integrity error. <b>IMPORTANT NOTE:</b> existing archives must be re-imported</li>
+  <li>Bug Fix: Browse/Customize archive caused an internal error in some conditions</li>
+  <li>Bug Fix: Deployment write errors (i.e. no more space) cause files to be partially deployed without reporting errors</li>
+  <li>Bug Fix: full deployments sometimes silently failed</li>
+</ul>
+<h2>Kwatee 2.1.5<span class="s1"> - released May 7, 2012</span></h2>
+<ul>
+  <li>Major Fix: severe issues when hosting kwatee on windows. Paths were not properly normalized and caused problems during deployment</li>
+  <li>New: import/export database schema</li>
+  <li>Enhancement: solaris sparc server support</li>
+  <li>Enhancement: changed kwatee.properties structure. <b>IMPORTANT NOTE:</b> if you customized kwatee.properties in an earlier version you must re-apply your changes in the new format.</li>
+  <li>Enhancement: improve stack trace details for troubleshooting</li>
+  <li>Fix: problem on windows (not cygwin) when deploying on drive other than C:</li>
+  <li>Fix: minor fix when using cygwin</li>
+</ul>
+<h2>Kwatee 2.1.4<span class="s1"> - released April 4, 2012</span></h2>
+<ul>
+  <li>New: offline installers can be generated automatically (python, ant, maven)</li>
+  <li>New: removed audit log GUI and moved activity logs to logs/kwatee_audit.log</li>
+  <li>Enhancement: kwatee logs moved to logs/kwatee.log</li>
+  <li>fix: PHP tutorial updated to rename obsolete kwatee_pool_instance variable</li>
+</ul>
+<h2>Kwatee 2.1.3<span class="s1"> - released March 24, 2012</span></h2>
+<ul>
+  <li>Fix: regression bug: 'ignoreVariables' flag does not work</li>
+</ul>
+<h2>Kwatee 2.1.2<span class="s1"> - released March 22, 2012</span></h2>
+<ul>
+  <li>Fix: Server Pool creation generates 500 Internal error</li>
+</ul>
+<h2>Kwatee 2.1.1<span class="s1"> - released March 14, 2012</span></h2>
+<ul>
+  <li>New: kwatee plugin for native integration with maven</li>
+  <li>Fix: kwatee ant task generated spurious error during update even though everything worked fine</li>
+</ul>
+<h2>Kwatee 2.1.0<span class="s1"> - released February 20, 2012</span></h2>
+<p>This release includes some new features and bug fixes. It requires a database schema upgrade</p>
+<ul>
+  <li>New: Free for personal AND commercial internal use without software restrictions</li>
+  <li>New: Version variables display</li>
+  <li>New: Version variables default values</li>
+  <li>Enhancement: show all missing version variables in an action, not just the first one</li>
+  <li>Enhancement: improved deployment variable presentation</li>
+  <li>Fix: environment duplication fails with internal error</li>
+</ul>
+<h2>Kwatee 2.0.2<span class="s1"> - released February 9, 2012</span></h2>
+<ul>
+  <li>New: import/export of environments</li>
+  <li>Enhancement: overlays of frozen deployments are browsable</li>
+  <li>Enhancement: hide empty servers in frozen deployments</li>
+  <li>Fix: user creation fails</li>
+</ul>
+<h2>Kwatee 2.0.1<span class="s1"> - released January 31, 2012</span></h2>
+<ul>
+  <li>New: strip common root folder from imported archive (when applicable)</li>
+  <li>New: archive browser provides a shortcut to all special files (templatized, overlay or with options) </li>
+  <li>New: added Bzip2 archive decoding support</li>
+  <li>Enhancement: improved speed of page loading</li>
+  <li>Fix: duplicate version failed to duplicate archive file options</li>
+  <li>Fix: multi-line editor would sometimes remain open when clicking OK</li>
+  <li>Fix: ignore integrity special flag not properly taken into account</li>
+  <li>Fix: xml descriptor format error in some circumstances incorrectly flagged integrity check errors</li>
+  <li>Fix: last character on each line truncated in multi-line telnet scripts</li>
+</ul>
+<h2>Kwatee 2.0.0<span class="s1"> - released January 17, 2012</span></h2>
+<p>This is a major release. Unfortunately, due to major changes, it is not possible to upgrade from previous versions.</p>
+<ul>
+  <li>New: major user interface revamping</li>
+  <li>New: <i>server pools</i> to deploy load-balanced web applications</li>
+  <li>New: dynamically defined Amazon EC2 server pools</li>
+  <li>New: agent for AIX servers</li>
+  <li>New: python helper scripts for command-line operations</li>
+  <li>New: option to enforce sequential server deployments</li>
+  <li>New: pre-deploy/post-deploy and pre-undeploy/post-undeploy version actions.</li>
+  <li>New: pre-setup/post-setup and pre-cleanup/post-cleanup deployment actions</li>
+  <li>New: multi-line actions</li>
+  <li>New: versions without archives (only action execution)</li>
+  <li>New: experimental support for telnet/ftp deployments (mainly for windows servers)</li>
+  <li>New: support paraphrase for ssh private key login</li>
+  <li>Enhancement: off-line installation</li>
+  <li>Enhancement: improved REST interface</li>
+  <li>Enhancement: removed dependency on third-party library for python automation</li>
+  <li>Enhancement: improved ant automation</li>
+  <li>Enhancement: server-wide status in deployment operations</li>
+  <li>Enhancement: overall stability and consistency improvements</li>
+</ul>
+<h2>KwateeSDCM 1.3.1<span class="s1"> - released October 9, 2011</span></h2>
+<ul>
+  <li>Fixed an important bug which caused new installation to require an upgrade script which did not exist.</li>
+  <li>Added remove (uninstall) environment option to rest interface and ant task.</li>
+</ul>
+<h2>KwateeSDCM 1.3.0<span class="s1"> - released September 23, 2011</span></h2>
+<ul>
+  <li>Added ant task for integrating deployment phases in java applications/web apps (addons directory).</li>
+  <li>Modified REST service parameters to improve start/stop/deploy granularity (package/server level).</li>
+  <li>Included pyton sdcmlib for automation in package (addons directory).</li>
+  <li>Fixed issue that caused an internal error when opening packages containing a version that had no uploaded archive.</li>
+  <li>Fixed import of non-compressed archive files.</li>
+</ul>
+<h2>KwateeSDCM 1.2.0<span class="s1"> - released July 21, 2011</span></h2>
+<ul>
+  <li>Added native support for deployment on 64 bits linux servers.</li>
+  <li>Improved agent plug-in mechanism to easily add new agents without requiring schema update.</li>
+  <li>Miscellaneous minor bug fixes.</li>
+</ul>
+<h2>KwateeSDCM 1.1.1<span class="s1"> - released June 27, 2011</span></h2>
+<ul>
+  <li>Community License no longer requires registration and key.</li>
+</ul>
+<h2>KwateeSDCM 1.1.0<span class="s1"> - released June 23, 2011</span></h2>
+<p>This is a major release that requires a database upgrade and hence is not backwards compatible with older versions of KwateeSDCM.war.</p>
+<ul>
+  <li>Fixed compatibility issue with Tomcat 6+.</li>
+  <li>Further simplified setup process. Web application is now fully self-contained.</li>
+  <li>Added built-in version info support (see Documentation).</li>
+  <li>Added support for non-compressed local directory.</li>
+  <li>Prevent version used in a frozen deployment from being edited (must duplicate &amp; edit)</li>
+</ul>
+<h2>KwateeSDCM 1.0.1<span class="s1"> - released June 13, 2011</span></h2>
+<ul>
+  <li>Prevent version used in a frozen deployment from being edited (must duplicate &amp; edit)</li>
+</ul>
+<h2>KwateeSDCM 1.0.0<span class="s1"> - released June 8, 2011</span></h2>
+<p>This is a major release that requires a database upgrade and hence is not backwards compatible with older versions of KwateeSDCM.war.</p>
+<ul>
+  <li>Many improvement in the layout of the application and the user interface</li>
+  <li>Simplified installation - GUI for database schema creation/upgrade</li>
+  <li>Resolved incompatibility with Internet Explorer</li>
+  <li>Enhancement - packages within deployments can be manually ordered to control install-time dependencies.</li>
+  <li>Enhancement - REST API now has server and package granularity for deploy/start/stop</li>
+  <li>Enhancement - additional parameters introduced in applicationContext.xml for advanced configuration.</li>
+  <li>Bug fix - update system properties no longer generates internal error</li>
+  <li>Bug fix - duplicate environment no longer generates internal error</li>
+  <li>Bug fix - duplicate version now duplicates the archive as well</li>
+</ul>
+<h2>KwateeSDCM 0.9.4<span class="s1"> - released May 05, 2011</span></h2>
+<ul>
+  <li>Deployment: fixed bug introduced in 0.9.3 that caused templatized files not to be installed in some cases</li>
+  <li>Environments: Minor deployment reports enhancements</li>
+  <li>Environments: improved display of undefined variables in Deployment Variables Dialog</li>
+  <li>Configuration: added configurable properties in applicationContext.xml</li>
+  <li>Repository: fixed bug that prevented import of zip/war archives with undefined file lengths in zip headers (e.g. war apps generated by eclipse)</li>
+  <li>sdcmagent: minor bug fix to avoid to redundantly re-create empty directories during package updates</li>
+</ul>
+<h2>KwateeSDCM 0.9.3<span class="s1"> - released April 22, 2011</span></h2>
+<ul>
+  <li>REST API: status method modified, environment/deployment/ref are now implicit (see blog.kwatee.net)</li>
+  <li>REST API: introduction of cancel operation (see blog.kwatee.net)</li>
+  <li>Repository: accelerated display of Customize dialog for large archives</li>
+  <li>Repository: fixed issue that prevented to import some large archives</li>
+  <li class="li4">Environments: fixed compatibility that caused some archive to fail to expand during installation</li>
+</ul>
+<h2>KwateeSDCM 0.9.2<span class="s1"> - released April 17, 2011</span></h2>
+<ul>
+  <li>New REST API</li>
+  <li>Repository: enhancement - optional archive update from local file system (no http upload)</li>
+</ul>
+<h2><span class="s1">KwateeSDCM 0.9.1</span> - released March 19, 2011</h2>
+<p>Initial public release</p>
+</body>
+</html>

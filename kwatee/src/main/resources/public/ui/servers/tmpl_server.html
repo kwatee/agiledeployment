@@ -1,0 +1,103 @@
+<ng-form name="form">
+	<div class="row" style="margin-bottom: 15px">
+		<div class="col-xs-12">
+			<div class="input-group">
+				<span class="input-group-addon">Description</span>
+				<input type="text" id="description" ng-model="server.description" class="form-control"></input>
+				<span class="input-group-addon">
+					<label><input type="checkbox" ng-model="server.disabled">disabled</label>
+				</span>
+			</div><!-- /input-group -->
+		</div><!-- /.col-lg-6 -->
+	</div>
+	
+	<div class="row" style="margin-bottom:15px">
+		<div class="col-sm-3">
+			<label>Platform
+			<select ng-options="p.id as p.name for p in platforms" ng-model="server.platform" class="form-control" id="platform"></select>
+			</label>
+		</div>
+		<div class="col-sm-5">
+			<label>IP address
+			<input type="text" id="ip" ng-model="server.ipAddress" class="form-control"></input>
+			</label>
+		</div>
+		<div class="col-sm-2">
+			<label>Port
+			<input type="text" id="port" ng-model="server.port" class="form-control"></input>
+			</label>
+		</div>
+		<div class="col-sm-2">
+			<label></label>
+			<button type="button" id="testConnection" ng-click="testConnection()" class="btn btn-info btn-xs" style="margin-top:5px">Test Connection</button>
+		</div>
+	</div>
+
+	<div class="row" style="margin-bottom:15px">
+		<div class="col-sm-4">
+			<label>Connection method
+			<select id="conduitType" ng-options="c.id as c.name for c in conduitTypes" ng-model="server.conduitType" class="form-control" ng-change="toggleAuth()"></select>
+			</label>
+		</div>
+		<div class="col-sm-2" ng-if="isTelnet()">
+			<label></label>
+			<button id="telnetOptions" type="button" class="btn btn-primary btn-xs" style="margin-top:6px;" ng-click="editTelnetOptions()">Options...</button>
+		</div>
+	</div>
+
+	<div class="row" style="margin-bottom:15px">
+		<div class="col-sm-4">
+			<label>Login
+			<input type="text" id="login" ng-model="server.credentials.login" class="form-control"></input>
+			</label>
+		</div>
+		<div class="col-sm-4" ng-if="!isTelnet()">
+			<label for="auth">with</label>
+			<div class="form-horizontal"><div style="margin-top:-5px">
+				<span class="radio radio-inline">
+					<label><input type="radio" id="passwordAuth" name="auth" ng-model="authType" value="password" ng-change="toggleAuth()">Password</label>
+				</span>
+				<span class="radio radio-inline">
+					<label><input type="radio" id="privateKeyAuth" name="auth" ng-model="authType" value="privateKey" ng-change="toggleAuth()">Private Key</label>
+				</span>
+				<button id="editKey" type="button" ng-if="authType === 'privateKey'" class="btn btn-xs" style='margin-top:5px; margin-left: 5px' ng-click='editPrivateKey()'>Edit</button>
+			</div></div>
+		</div>
+		<div class="col-sm-4">
+			<label>when deploying</label>
+			<span class="checkbox">
+				<input type="checkbox" ng-model="server.useSudo">Use sudo</label>
+			</span>
+		</div>
+	</div>
+	<div class="row" style="margin-bottom:15px">
+		<div class="col-sm-4">
+			<label for="password">Password</label>
+			<input type="password" id="password" ng-model="server.credentials.password" class="form-control" ng-disabled="server.credentials.promptPassword"></input>
+		</div>
+		<div class="col-sm-2">
+			<label></label>
+			<span class="checkbox">
+				<label title="Prompt for password during deployment operation"><input type="checkbox" ng-model="server.credentials.promptPassword">
+				Prompt</label>
+			</span>
+		</div>
+	</div>
+
+	<div class="panel panel-default" ng-if="server.poolType">
+		<div class="panel-heading">
+			<span class="h5">{{poolName(server.poolType)}}</span>
+		</div>
+		<div ng-switch="server.poolType">
+			<server-pool-manual ng-switch-when="manual" properties="server.poolProperties"></server-pool-manual>
+			<server-pool-ec2 ng-switch-when="ec2" properties="server.poolProperties" descriptors="descriptors"></server-pool-ec2>
+			<server-pool-generic ng-switch-default properties="server.poolProperties" descriptors="descriptors"></server-pool-generic>
+		</div>
+	</div>
+
+	<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+	<div class="row modal-footer">
+		<button type="reset" id="revert" class="btn" ng-click="revert()" ng-disabled="form.$pristine">Discard Changes</button>
+		<button type="submit" id="save" class="btn btn-primary" ng-click="save()" ng-disabled="form.$pristine">Save</button>
+	</div>
+</ng-form>

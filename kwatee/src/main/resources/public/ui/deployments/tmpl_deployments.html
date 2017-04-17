@@ -1,0 +1,20 @@
+<alert ng-if="lastKwateeError" close="clearLastKwateeError()" class="alert-danger">{{lastKwateeError}}</alert>
+<div class="row">
+	<div class="col-xs-12">
+		<accordion class="deployments">
+			<accordion-group ng-repeat="deployment in deployments" heading="{{deployment.name}}" is-open="status[deployment.name]">
+				<table class="table table-striped table-condensed table-truncate">
+					<colgroup>
+						<col width="1px">
+						<col>
+					</colgroup>
+					<tr ng-repeat="release in deployment.releases">
+						<td><div class="icon only tagIcon"></div></td>
+						<td><a href="#/deployments/{{deployment.name}}/{{release.name}}">{{release.name}}</a></td>
+					</tr>
+				</table>
+			</accordion-group>
+		</accordion>
+		<alert ng-if="!deployments.length" type="info">No deployable releases</alert>
+	</div>
+</div>
